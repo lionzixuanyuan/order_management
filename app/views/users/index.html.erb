@@ -1,0 +1,32 @@
+<div class="row">
+  <div class="col-md-1"></div>
+  <div class="col-md-10">
+    <div class="page-header">
+      <h3>用户信息列表</h3>
+    </div>
+
+    <table class="table table-bordered table-hover">
+      <thead>
+        <tr>
+          <th>#</th>
+          <th>用户名</th>
+          <th>邮箱</th>
+          <th>用户角色</th>
+          <th>操作</th> 
+        </tr>
+      </thead>
+      <tbody>
+        <% @users.each do |u| %>
+          <tr>
+            <td><%= u.id %></td>
+            <td><%= u.name %></td>
+            <td><%= u.email %></td>
+            <td><%= u.roles %></td>
+            <td><%= link_to "查看用户详情", user_path(u) %></td> 
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+  <div class="col-md-1"></div>
+</div>

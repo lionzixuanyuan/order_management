@@ -8,15 +8,24 @@
 </head>
 <body>
 
-<% if current_user %>
-  Signed in as <%= current_user.name %> | <%= link_to "Logout", '/logout' %>
-<% else %>
-  <%= link_to 'Login', '/login' %> | <%= link_to 'Signup', '/signup' %>
-<% end %>
+<%= render "top_nav" %>
 
-<%= yield %>
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-md-3"></div>
+      <div class="col-md-6">
+        <% if flash[:notice] %>
+          <div class="alert alert-warning alert-dismissible" role="alert">
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <%= flash[:notice] %>
+          </div>
+        <% end %>
+      </div>
+      <div class="col-md-3"></div>
+    </div>
+
+    <%= yield %>
+  </div>
 
 </body>
 </html>
-
-<%= flash[:notice] %>
