@@ -3,9 +3,9 @@ class User < ActiveRecord::Base
   # validates :email, presence: {message: "邮箱不能为空！"}
   # validates :email, uniqueness: {message: "该邮箱已被注册！"}
   # validates :name, presence: {message: "用户名不能为空！"}
-  validates :name, presence: true 
-  validates :email, presence: true 
-  validates :email, uniqueness: true 
+  validates :name, presence: true
+  validates :email, presence: true
+  validates :email, uniqueness: true
 
   def roles=(roles)
     self.roles_mask = (roles & ROLES).map { |r| 2**ROLES.index(r) }.inject(0, :+)

@@ -21,8 +21,11 @@
             <td><%= u.id %></td>
             <td><%= u.name %></td>
             <td><%= u.email %></td>
-            <td><%= u.roles %></td>
-            <td><%= link_to "查看用户详情", user_path(u) %></td> 
+            <td><%= u.roles.join("、") %></td>
+            <td>
+              <%= link_to "查看用户详情", user_path(u) %>|
+              <%= link_to "更改用户信息", edit_user_path(u) %>
+            </td> 
           </tr>
         <% end %>
       </tbody>

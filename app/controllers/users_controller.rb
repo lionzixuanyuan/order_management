@@ -14,6 +14,13 @@ class UsersController < ApplicationController
     @user = User.new
   end
 
+  def edit
+    unless (current_user == @user) || (current_user.is? "系统管理员")
+      flash[:notice] = "您的权限不足，请联系系统管理员，谢谢！"
+      redirect_to '/'
+    end
+  end
+
   def create
     user = User.new(user_params)
     if user.save
@@ -27,16 +34,17 @@ class UsersController < ApplicationController
   end
 
   def update
+    @user.roles = params[:user][:roles] unless params[:user][:roles].blank?
     if @user.update(user_params)
-      redirect_to @user, notice: '用户信息变更成功！'
+      redirect_to @user, notice: "用户信息变更成功！"
     else
-      redirect_to @user, notice: '用户信息变更失败！'
+      redirect_to @user, notice: "用户信息变更失败：#{@user.errors.full_messages.join('；')}！"
     end
   end
 
 private
   def user_params
-    params.require(:user).permit(:name, :email, :password, :password_confirmation)
+    params.require(:user).permit(:name, :email, :password, :password_confirmation, :roles)
   end 
 
   def set_user

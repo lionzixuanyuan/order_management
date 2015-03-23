@@ -6,7 +6,7 @@ Rails.application.routes.draw do
   # You can have the root of your site routed with "root"
   root 'welcome#index'
 
-  resources :users, only: [:index, :show, :update, :new]
+  resources :users, only: [:index, :show, :edit, :update, :new]
 
   get '/login' => 'sessions#new'
   post '/login' => 'sessions#create'
