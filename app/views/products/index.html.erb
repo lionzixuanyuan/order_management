@@ -1,29 +1,38 @@
-<h1>Listing products</h1>
+<div class="row">
+  <div class="col-md-1"></div>
+  <div class="col-md-10">
+    <div class="page-header">
+      <h3>产品信息列表</h3>
+    </div>
 
-<table>
-  <thead>
-    <tr>
-      <th>Name</th>
-      <th>Unit</th>
-      <th>Price</th>
-      <th colspan="3"></th>
-    </tr>
-  </thead>
+    <table class="table table-bordered table-hover">
+      <thead>
+        <tr>
+          <th>#</th>
+          <th>产品名称及规格</th>
+          <th>产品单位</th>
+          <th>产品单价</th>
+          <th>操作</th> 
+        </tr>
+      </thead>
+      <tbody>
+        <% @products.each do |u| %>
+          <tr>
+            <td><%= u.id %></td>
+            <td><%= u.name %></td>
+            <td><%= u.unit %></td>
+            <td><%= u.price %></td>
+            <td>
+              <%= link_to "查看产品详情", product_path(u) %>|
+              <%= link_to "更改产品信息", edit_product_path(u) %>
+            </td> 
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+    <%= paginate @products %>
+    <%= link_to 'New product', new_product_path, class: "button" %>
+  </div>
+  <div class="col-md-1"></div>
+</div>
 
-  <tbody>
-    <% @products.each do |product| %>
-      <tr>
-        <td><%= product.name %></td>
-        <td><%= product.unit %></td>
-        <td><%= product.price %></td>
-        <td><%= link_to 'Show', product %></td>
-        <td><%= link_to 'Edit', edit_product_path(product) %></td>
-        <td><%= link_to 'Destroy', product, method: :delete, data: { confirm: 'Are you sure?' } %></td>
-      </tr>
-    <% end %>
-  </tbody>
-</table>
-
-<br>
-
-<%= link_to 'New Product', new_product_path %>

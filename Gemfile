@@ -31,6 +31,8 @@ gem 'bcrypt', '~> 3.1.7'
 
 gem 'rails-assets-bootstrap'
 
+gem 'kaminari'
+
 # Use unicorn as the app server
 # gem 'unicorn'
 
