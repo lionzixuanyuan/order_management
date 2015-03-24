@@ -1,0 +1,44 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Code:</strong>
+  <%= @order.code %>
+</p>
+
+<p>
+  <strong>Customer:</strong>
+  <%= @order.customer_id %>
+</p>
+
+<p>
+  <strong>Totle amount:</strong>
+  <%= @order.totle_amount %>
+</p>
+
+<p>
+  <strong>Totle sum:</strong>
+  <%= @order.totle_sum %>
+</p>
+
+<p>
+  <strong>Inceptor:</strong>
+  <%= @order.inceptor %>
+</p>
+
+<p>
+  <strong>Saleman:</strong>
+  <%= @order.saleman %>
+</p>
+
+<p>
+  <strong>Creator:</strong>
+  <%= @order.creator_id %>
+</p>
+
+<p>
+  <strong>Statr:</strong>
+  <%= @order.statr %>
+</p>
+
+<%= link_to 'Edit', edit_order_path(@order) %> |
+<%= link_to 'Back', orders_path %>
