@@ -11,7 +11,53 @@
     </div>
   <% end %>
 
-  <div class="field">
+  <table class="table table-bordered">
+    <tr>
+      <td colspan='1'>客户名称：</td>
+      <td colspan='3'>
+        <%= f.hidden_field :customer_id %>
+      </td>
+      <td colspan='1'>编号：</td>
+      <td colspan='2'><%= f.text_field :code %></td>
+    </tr>
+    <tr>
+      <td colspan='1'>客户地址：</td>
+      <td colspan='3'><p id="address_ele"></p></td>
+      <td colspan='1'>时间：</td>
+      <td colspan='2'>-</td>
+    </tr>
+    <tr>
+      <td>添加</td>
+      <td>品名及规格</td>
+      <td>单位</td>
+      <td>数量</td>
+      <td>价格</td>
+      <td>折扣（％）</td>
+      <td>金额</td>
+    </tr>
+    <%= render 'order_detail_form', f: f %>
+    <tr>
+      <td colspan='3'>数量合计</td>
+      <td></td>
+      <td colspan='3'>-<%= f.number_field :totle_amount %></td>
+    </tr>
+    <tr>
+      <td colspan='3'>金额合计</td>
+      <td colspan='3'>-<%= f.text_field :totle_sum %></td>
+      <td></td>
+    </tr>
+    <tr>
+      <td>签收人：</td>
+      <td colspan='2'>-</td>
+      <td>业务员：</td>
+      <td><%= f.text_field :saleman %></td>
+      <td>制单：</td>
+      <td><%= f.number_field :creator_id %></td>
+    </tr>
+  </table>
+
+
+  <!-- <div class="field">
     <%= f.label :code %><br>
     <%= f.text_field :code %>
   </div>
@@ -38,11 +84,14 @@
   <div class="field">
     <%= f.label :creator_id %><br>
     <%= f.number_field :creator_id %>
-  </div>
-  <div class="field">
+  </div> -->
+
+  <!-- <%= render 'order_detail_form', f: f %> -->
+
+  <!-- <div class="field">
     <%= f.label :state %><br>
     <%= f.text_field :state %>
-  </div>
+  </div> -->
   <div class="actions">
     <%= f.submit %>
   </div>
