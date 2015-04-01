@@ -1,12 +1,13 @@
 <%= f.fields_for :order_details do |order_details_form| %>
   <tr>
-    <td>删除</td>
-    <td><%= order_details_form.text_field :product_id %></td>
-    <td><%= order_details_form.text_field :product_id %></td>
-    <td><%= order_details_form.text_field :amount %></td>
-    <td><%= order_details_form.text_field :product_id %></td>
+    <!-- <td><button type='button' class='btn btn-danger delete'>删除</button></td> -->
+    <td><%= index %></td>
+    <td><%= order_details_form.collection_select :product_id, Product.all, :id, :name, {:prompt => true}, {:class=>'combobox form-control'} %></td>
+    <td><p class='unit_ele'></p></td>
+    <td><%= order_details_form.text_field :amount, value: 0 %></td>
+    <td><p class='price_ele'></p></td>
     <td><%= order_details_form.text_field :discount %></td>
-    <td><%= order_details_form.text_field :sum %></td>
+    <td><%= order_details_form.text_field :sum, value: 0 %></td>
   </tr>
 <% end %>
 

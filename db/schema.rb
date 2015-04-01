@@ -23,8 +23,8 @@ ActiveRecord::Schema.define(version: 20150324134803) do
   create_table "order_details", force: true do |t|
     t.integer  "order_id"
     t.integer  "product_id"
-    t.integer  "amount"
-    t.decimal  "discount"
+    t.integer  "amount",     default: 1
+    t.decimal  "discount",   default: 100.0
     t.decimal  "sum"
     t.datetime "created_at"
     t.datetime "updated_at"

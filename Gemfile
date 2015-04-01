@@ -30,6 +30,7 @@ gem 'spring',        group: :development
 gem 'bcrypt', '~> 3.1.7'
 
 gem 'rails-assets-bootstrap'
+gem 'rails-assets-bootstrap-combobox'
 
 gem 'kaminari'
 

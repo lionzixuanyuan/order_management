@@ -15,7 +15,7 @@
     <tr>
       <td colspan='1'>客户名称：</td>
       <td colspan='3'>
-        <%= f.hidden_field :customer_id %>
+        <%= f.collection_select :customer_id, Customer.all, :id, :name, {:prompt => true}, {:class=>'combobox form-control'} %>
       </td>
       <td colspan='1'>编号：</td>
       <td colspan='2'><%= f.text_field :code %></td>
@@ -27,7 +27,8 @@
       <td colspan='2'>-</td>
     </tr>
     <tr>
-      <td>添加</td>
+      <!-- <td><button type="button" class="btn btn-primary add">添加</button></td> -->
+      <td></td>
       <td>品名及规格</td>
       <td>单位</td>
       <td>数量</td>
@@ -35,7 +36,11 @@
       <td>折扣（％）</td>
       <td>金额</td>
     </tr>
-    <%= render 'order_detail_form', f: f %>
+    <div class="order_detail">
+      <% 14.times do |index| %>
+        <%= render 'order_detail_form', f: f, index: index + 1 %>
+      <% end %>
+    </div>
     <tr>
       <td colspan='3'>数量合计</td>
       <td></td>
@@ -43,8 +48,8 @@
     </tr>
     <tr>
       <td colspan='3'>金额合计</td>
-      <td colspan='3'>-<%= f.text_field :totle_sum %></td>
-      <td></td>
+      <td colspan='3'><p class="traditional_price"></p></td>
+      <td><%= f.text_field :totle_sum %></td>
     </tr>
     <tr>
       <td>签收人：</td>
@@ -55,44 +60,93 @@
       <td><%= f.number_field :creator_id %></td>
     </tr>
   </table>
-
-
-  <!-- <div class="field">
-    <%= f.label :code %><br>
-    <%= f.text_field :code %>
-  </div>
-  <div class="field">
-    <%= f.label :customer_id %><br>
-    <%= f.number_field :customer_id %>
-  </div>
-  <div class="field">
-    <%= f.label :totle_amount %><br>
-    <%= f.number_field :totle_amount %>
-  </div>
-  <div class="field">
-    <%= f.label :totle_sum %><br>
-    <%= f.text_field :totle_sum %>
-  </div>
-  <div class="field">
-    <%= f.label :inceptor %><br>
-    <%= f.text_field :inceptor %>
-  </div>
-  <div class="field">
-    <%= f.label :saleman %><br>
-    <%= f.text_field :saleman %>
-  </div>
-  <div class="field">
-    <%= f.label :creator_id %><br>
-    <%= f.number_field :creator_id %>
-  </div> -->
-
-  <!-- <%= render 'order_detail_form', f: f %> -->
-
-  <!-- <div class="field">
-    <%= f.label :state %><br>
-    <%= f.text_field :state %>
-  </div> -->
   <div class="actions">
     <%= f.submit %>
   </div>
 <% end %>
+
+<script type="text/javascript">
+  $(document).ready(function(){
+    $('.combobox').combobox();
+
+    $("[name='order[customer_id]']").on("change", function(){
+      $.ajax({
+        type: "GET",
+        url: "/customers/" + $(this).val() + ".json",
+        success: function(data){  
+          $("#address_ele").text(data.address);
+        }
+      });
+    });
+
+    $("[name$='[product_id]']").on("change", function(){
+      tr_node = $(this).parents("tr");
+      amount = tr_node.find("[name$='[amount]']");
+      unit_node = tr_node.find(".unit_ele");
+      price_node = tr_node.find(".price_ele");
+
+      $.ajax({
+        type: "GET",
+        url: "/products/" + $(this).val() + ".json",
+        success: function(data){
+          amount.val(1);
+          unit_node.text(data.unit);
+          price_node.text(data.price);
+          update_detail_sum(price_node);
+          update_total_amount();
+        }
+      });
+    });
+
+    $("button.delete").on("click", function(){
+      if ($("button.delete").size() == 1) {
+        alert("这已经是最后一条产品详情了，无法删除！");
+      } else{
+        tr_node = $(this).parents("tr");
+        if (confirm("确认删除这条产品详情吗？")) {
+          tr_node.remove();
+        };
+      };
+    });
+
+    $("[name$='[amount]']").on("change", function(){
+      update_detail_sum($(this));
+      update_total_amount();
+    });
+
+    $("[name$='[discount]']").on("change", function(){
+      update_detail_sum($(this));
+    });
+
+    function update_detail_sum (node) {
+      tr_node = node.parents("tr");
+      price = parseInt(tr_node.find(".price_ele").text());
+      amount = tr_node.find("[name$='[amount]']").val();
+      discount = tr_node.find("[name$='[discount]']").val();
+      detail_sum_node = tr_node.find("[name$='[sum]']")
+      // 计算方法需要再校验一下
+      detail_sum = price * amount * discount / 100
+      detail_sum_node.val(detail_sum);
+      update_total_sum();
+    }
+
+    function update_total_sum () {
+      totle_sum = 0
+      $("[name$='[sum]']").each(function(){
+        totle_sum += parseInt($(this).val());
+      });
+      $("#order_totle_sum").val(totle_sum);
+      $(".traditional_price").text(convertCurrency(totle_sum));
+    }
+
+    function update_total_amount () {
+      console.log("ready");
+      totle_amount = 0
+      $("[name$='[amount]']").each(function(){
+        totle_amount += parseInt($(this).val());
+      });
+      $("#order_totle_amount").val(totle_amount);
+    }
+
+  });
+</script>

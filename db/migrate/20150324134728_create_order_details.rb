@@ -3,8 +3,8 @@ class CreateOrderDetails < ActiveRecord::Migration
     create_table :order_details do |t|
       t.integer :order_id
       t.integer :product_id
-      t.integer :amount
-      t.decimal :discount
+      t.integer :amount, default: 1
+      t.decimal :discount, default: 100
       t.decimal :sum
 
       t.timestamps
