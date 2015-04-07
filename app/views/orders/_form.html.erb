@@ -27,7 +27,7 @@
       <td colspan='2'>-</td>
     </tr>
     <tr>
-      <td><button type="button" class="btn btn-primary add">添加</button></td>
+      <td><%= link_to_add_association '添加', f, :order_details, class: "btn btn-primary", role: "button" %></td>
       <td>品名及规格</td>
       <td>单位</td>
       <td>数量</td>
@@ -35,7 +35,11 @@
       <td>折扣（％）</td>
       <td>金额</td>
     </tr>
-    <%= render 'order_detail_form', f: f %>
+
+    <%= f.fields_for :order_details do |f| %>
+      <%= render "order_detail_fields", f: f %>
+    <% end %>
+
     <tr>
       <td colspan='3'>数量合计</td>
       <td></td>
@@ -144,13 +148,24 @@
         $("#order_totle_amount").val(totle_amount);
       }
 
-      // 添加订单详情记录
-      $("form").on("click", "button.add", function(){
-        $("tr.order_detail:last").after("<%= escape_javascript(render 'order_detail_form', f: f) %>");
-        tr_node = $("tr.order_detail:last");
-        combobox = tr_node.find(".combobox");
-        combobox.combobox();
-      });
+      $("form a.add_fields").
+      data("association-insertion-method", 'after').
+      data("association-insertion-node", 'tr.order_detail:last');
+
+      $('form')
+        .on('cocoon:after-insert', function(e, insertedItem) {
+          console.log("insert");
+          combobox = insertedItem.find(".combobox");
+          combobox.combobox();
+        }).on("cocoon:before-remove", function() {
+          console.log("before remove");
+          /* e.g. recalculate order of child items */
+        }).on("cocoon:after-remove", function() {
+          console.log("remove");
+          /* e.g. recalculate order of child items */
+          update_total_sum();
+          update_total_amount();
+        });
 
     });
   </script>

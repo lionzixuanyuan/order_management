@@ -13,6 +13,7 @@
 //= require jquery
 //= require jquery_ujs
 //= require turbolinks
+//= require cocoon
 //= require bootstrap
 //= require bootstrap-combobox
 //= require_tree .

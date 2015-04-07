@@ -34,6 +34,8 @@ gem 'rails-assets-bootstrap-combobox'
 
 gem 'kaminari'
 
+gem "cocoon"
+
 # Use unicorn as the app server
 # gem 'unicorn'
 
