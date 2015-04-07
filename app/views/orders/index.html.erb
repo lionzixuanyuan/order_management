@@ -26,13 +26,13 @@
           <tr>
             <td><%= u.id %></td>
             <td><%= u.code %></td>
-            <td><%= u.customer.name %></td>
-            <td><%= u.customer.address %></td>
+            <td><%= u.customer.name if u.customer %></td>
+            <td><%= u.customer.address if u.customer %></td>
             <td><%= u.totle_amount %></td>
             <td><%= u.totle_sum %></td>
             <td><%= u.inceptor %></td>
             <td><%= u.saleman %></td>
-            <td><%= u.creator.name %></td>
+            <td><%= u.creator.name if u.creator %></td>
             <td><%= u.state %></td>
             <td>
               <%= link_to "查看订单详情", order_path(u) %>|

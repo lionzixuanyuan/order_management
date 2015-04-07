@@ -37,10 +37,10 @@
         <% @order.order_details.each_with_index do |d, index| %>
           <tr>
             <td><%= index + 1 %></td>
-            <td><%= d.product.name %></td>
-            <td><%= d.product.unit %></td>
+            <td><%= d.product.name if d.product %></td>
+            <td><%= d.product.unit if d.product %></td>
             <td><%= d.amount %></td>
-            <td><%= d.product.price %></td>
+            <td><%= d.product.price if d.product %></td>
             <td><%= d.discount %></td>
             <td><%= d.sum %></td>
           </tr>
@@ -74,12 +74,12 @@
 
         <tr>
           <td>客户名称：</td>
-          <td><%= @order.customer.name %></td>
+          <td><%= @order.customer.name if @order.customer %></td>
         </tr>
 
         <tr>
           <td>客户地址：</td>
-          <td><%= @order.customer.address %></td>
+          <td><%= @order.customer.address if @order.customer %></td>
         </tr>
 
         <tr>
@@ -104,7 +104,7 @@
 
         <tr>
           <td>制单员：</td>
-          <td><%= @order.creator.name %></td>
+          <td><%= @order.creator.name if @order.creator %></td>
         </tr>
 
         <tr>

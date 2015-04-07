@@ -27,8 +27,7 @@
       <td colspan='2'>-</td>
     </tr>
     <tr>
-      <!-- <td><button type="button" class="btn btn-primary add">添加</button></td> -->
-      <td></td>
+      <td><button type="button" class="btn btn-primary add">添加</button></td>
       <td>品名及规格</td>
       <td>单位</td>
       <td>数量</td>
@@ -36,11 +35,7 @@
       <td>折扣（％）</td>
       <td>金额</td>
     </tr>
-    <div class="order_detail">
-      <% 14.times do |index| %>
-        <%= render 'order_detail_form', f: f, index: index + 1 %>
-      <% end %>
-    </div>
+    <%= render 'order_detail_form', f: f %>
     <tr>
       <td colspan='3'>数量合计</td>
       <td></td>
@@ -63,90 +58,100 @@
   <div class="actions">
     <%= f.submit %>
   </div>
-<% end %>
 
-<script type="text/javascript">
-  $(document).ready(function(){
-    $('.combobox').combobox();
+  <script type="text/javascript">
+    $(document).ready(function(){
+      $('.combobox').combobox();
 
-    $("[name='order[customer_id]']").on("change", function(){
-      $.ajax({
-        type: "GET",
-        url: "/customers/" + $(this).val() + ".json",
-        success: function(data){  
-          $("#address_ele").text(data.address);
-        }
+      $("form").on("change", "[name='order[customer_id]']", function(){
+        $.ajax({
+          type: "GET",
+          url: "/customers/" + $(this).val() + ".json",
+          success: function(data){  
+            $("#address_ele").text(data.address);
+          }
+        });
       });
-    });
 
-    $("[name$='[product_id]']").on("change", function(){
-      tr_node = $(this).parents("tr");
-      amount = tr_node.find("[name$='[amount]']");
-      unit_node = tr_node.find(".unit_ele");
-      price_node = tr_node.find(".price_ele");
-
-      $.ajax({
-        type: "GET",
-        url: "/products/" + $(this).val() + ".json",
-        success: function(data){
-          amount.val(1);
-          unit_node.text(data.unit);
-          price_node.text(data.price);
-          update_detail_sum(price_node);
-          update_total_amount();
-        }
-      });
-    });
-
-    $("button.delete").on("click", function(){
-      if ($("button.delete").size() == 1) {
-        alert("这已经是最后一条产品详情了，无法删除！");
-      } else{
+      $("form").on("change", "[name$='[product_id]']", function(){
         tr_node = $(this).parents("tr");
-        if (confirm("确认删除这条产品详情吗？")) {
-          tr_node.remove();
+        amount = tr_node.find("[name$='[amount]']");
+        unit_node = tr_node.find(".unit_ele");
+        price_node = tr_node.find(".price_ele");
+
+        $.ajax({
+          type: "GET",
+          url: "/products/" + $(this).val() + ".json",
+          success: function(data){
+            amount.val(1);
+            unit_node.text(data.unit);
+            price_node.text(data.price);
+            update_detail_sum(price_node);
+            update_total_amount();
+          }
+        });
+      });
+
+      $("form").on("click", "button.delete", function(){
+        if ($("button.delete").size() == 1) {
+          alert("这已经是最后一条产品详情了，无法删除！");
+        } else{
+          tr_node = $(this).parents("tr");
+          if (confirm("确认删除这条产品详情吗？")) {
+            tr_node.remove();
+            update_total_sum();
+            update_total_amount();
+          };
         };
-      };
-    });
-
-    $("[name$='[amount]']").on("change", function(){
-      update_detail_sum($(this));
-      update_total_amount();
-    });
-
-    $("[name$='[discount]']").on("change", function(){
-      update_detail_sum($(this));
-    });
-
-    function update_detail_sum (node) {
-      tr_node = node.parents("tr");
-      price = parseInt(tr_node.find(".price_ele").text());
-      amount = tr_node.find("[name$='[amount]']").val();
-      discount = tr_node.find("[name$='[discount]']").val();
-      detail_sum_node = tr_node.find("[name$='[sum]']")
-      // 计算方法需要再校验一下
-      detail_sum = price * amount * discount / 100
-      detail_sum_node.val(detail_sum);
-      update_total_sum();
-    }
-
-    function update_total_sum () {
-      totle_sum = 0
-      $("[name$='[sum]']").each(function(){
-        totle_sum += parseInt($(this).val());
       });
-      $("#order_totle_sum").val(totle_sum);
-      $(".traditional_price").text(convertCurrency(totle_sum));
-    }
 
-    function update_total_amount () {
-      console.log("ready");
-      totle_amount = 0
-      $("[name$='[amount]']").each(function(){
-        totle_amount += parseInt($(this).val());
+      $("form").on("change", "[name$='[amount]']", function(){
+        update_detail_sum($(this));
+        update_total_amount();
       });
-      $("#order_totle_amount").val(totle_amount);
-    }
 
-  });
-</script>
+      $("form").on("change", "[name$='[discount]']", function(){
+        update_detail_sum($(this));
+      });
+
+      function update_detail_sum (node) {
+        tr_node = node.parents("tr");
+        price = parseInt(tr_node.find(".price_ele").text());
+        amount = tr_node.find("[name$='[amount]']").val();
+        discount = tr_node.find("[name$='[discount]']").val();
+        detail_sum_node = tr_node.find("[name$='[sum]']")
+        // 计算方法需要再校验一下
+        detail_sum = price * amount * discount / 100
+        detail_sum_node.val(detail_sum);
+        update_total_sum();
+      }
+
+      function update_total_sum () {
+        totle_sum = 0
+        $("[name$='[sum]']").each(function(){
+          totle_sum += parseInt($(this).val());
+        });
+        $("#order_totle_sum").val(totle_sum);
+        $(".traditional_price").text(convertCurrency(totle_sum));
+      }
+
+      function update_total_amount () {
+        console.log("ready");
+        totle_amount = 0
+        $("[name$='[amount]']").each(function(){
+          totle_amount += parseInt($(this).val());
+        });
+        $("#order_totle_amount").val(totle_amount);
+      }
+
+      // 添加订单详情记录
+      $("form").on("click", "button.add", function(){
+        $("tr.order_detail:last").after("<%= escape_javascript(render 'order_detail_form', f: f) %>");
+        tr_node = $("tr.order_detail:last");
+        combobox = tr_node.find(".combobox");
+        combobox.combobox();
+      });
+
+    });
+  </script>
+<% end %>

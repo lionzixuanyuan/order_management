@@ -41,6 +41,7 @@ class OrdersController < ApplicationController
   # PATCH/PUT /orders/1
   # PATCH/PUT /orders/1.json
   def update
+    @order.order_details.each{|d| d.destroy}
     respond_to do |format|
       if @order.update(order_params)
         format.html { redirect_to @order, notice: 'Order was successfully updated.' }
@@ -70,6 +71,6 @@ class OrdersController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def order_params
-      params.require(:order).permit(:code, :customer_id, :totle_amount, :totle_sum, :inceptor, :saleman, :creator_id, :state, :order_details_attributes => [:product_id, :amount, :discount, :sum])
+      params.require(:order).permit(:code, :customer_id, :totle_amount, :totle_sum, :inceptor, :saleman, :creator_id, :state, :order_details_attributes => [:product_id, :amount, :discount, :sum, :_destroy])
     end
 end

@@ -1,7 +1,6 @@
 <%= f.fields_for :order_details do |order_details_form| %>
-  <tr>
-    <!-- <td><button type='button' class='btn btn-danger delete'>删除</button></td> -->
-    <td><%= index %></td>
+  <tr class="order_detail">
+    <td><button type='button' class='btn btn-danger delete'>删除</button></td>
     <td><%= order_details_form.collection_select :product_id, Product.all, :id, :name, {:prompt => true}, {:class=>'combobox form-control'} %></td>
     <td><p class='unit_ele'></p></td>
     <td><%= order_details_form.text_field :amount, value: 0 %></td>
