@@ -2,8 +2,13 @@
   <td><%= link_to_remove_association '删除', f, { wrapper_class: 'order_detail', class: 'btn btn-danger', role: 'button', data: {confirm: '确认要删除这条订单详情吗？'} } %></td>
   <td><%= f.collection_select :product_id, Product.all, :id, :name, {:prompt => true}, {:class=>'combobox form-control'} %></td>
   <td><p class='unit_ele'></p></td>
-  <td><%= f.text_field :amount, value: 0 %></td>
+  <td><%= f.text_field :amount, class: "form-control", style: "width: 60px;" %></td>
   <td><p class='price_ele'></p></td>
-  <td><%= f.text_field :discount %></td>
-  <td><%= f.text_field :sum, value: 0 %></td>
+  <td><%= f.text_field :discount, class: "form-control", style: "width: 60px;" %></td>
+  <td>
+    <div class="input-group">
+      <span class="input-group-addon">¥</span>
+      <%= f.text_field :sum, class: "form-control", readonly: "readonly", style: "width: 150px;" %>
+    </div>
+  </td>
 </tr>

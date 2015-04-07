@@ -15,15 +15,15 @@
         </tr>
         <tr>
           <td colspan='1'>客户名称：</td>
-          <td colspan='3'>名称</td>
+          <td colspan='3'><%= @order.customer.name if @order.customer %></td>
           <td colspan='1'>编号：</td>
-          <td colspan='2'>编号</td>
+          <td colspan='2'><%= @order.code %></td>
         </tr>
         <tr>
           <td colspan='1'>客户地址：</td>
-          <td colspan='3'>地址</td>
+          <td colspan='3'><%= @order.customer.address if @order.customer %></td>
           <td colspan='1'>时间：</td>
-          <td colspan='2'>时间</td>
+          <td colspan='2'><%= @order.created_at.strftime('%Y-%m-%d %H:%M:%S') %></td>
         </tr>
         <tr>
           <td></td>
@@ -47,76 +47,36 @@
         <% end %>
         <tr>
           <td colspan='3'>数量合计</td>
-          <td></td>
+          <td><%= @order.totle_amount %></td>
           <td colspan='3'></td>
         </tr>
         <tr>
           <td colspan='3'>金额合计</td>
-          <td colspan='3'></td>
-          <td></td>
+          <td colspan='3'><p class="traditional_price"></p></td>
+          <td><%= @order.totle_sum %></td>
         </tr>
         <tr>
           <td>签收人：</td>
           <td colspan='2'></td>
           <td>业务员：</td>
-          <td></td>
-          <td>制单：</td>
-          <td></td>
-        </tr>
-      </table>
-
-
-      <table class="table">
-        <tr>
-          <td>订单编号：</td>
-          <td><%= @order.code %></td>
-        </tr>
-
-        <tr>
-          <td>客户名称：</td>
-          <td><%= @order.customer.name if @order.customer %></td>
-        </tr>
-
-        <tr>
-          <td>客户地址：</td>
-          <td><%= @order.customer.address if @order.customer %></td>
-        </tr>
-
-        <tr>
-          <td>数量合计：</td>
-          <td><%= @order.totle_amount %></td>
-        </tr>
-
-        <tr>
-          <td>金额合计：</td>
-          <td><%= @order.totle_sum %></td>
-        </tr>
-
-        <tr>
-          <td>签收人：</td>
-          <td><%= @order.inceptor %></td>
-        </tr>
-
-        <tr>
-          <td>业务员：</td>
           <td><%= @order.saleman %></td>
-        </tr>
-
-        <tr>
-          <td>制单员：</td>
+          <td>制单：</td>
           <td><%= @order.creator.name if @order.creator %></td>
-        </tr>
-
-        <tr>
-          <td>订单状态：</td>
-          <td><%= @order.state %></td>
         </tr>
       </table>
     </div>
-
   </div>
   <div class="col-md-1"></div>
 </div>
 
 <%= link_to 'Edit', edit_order_path(@order) %> |
 <%= link_to 'Back', orders_path %>
+
+<script type="text/javascript">
+  $(document).ready(function(){
+    var totle_sum = "<%= @order.totle_sum %>"
+    $(".traditional_price").text(convertCurrency(totle_sum));
+  });
+</script>
+
+
