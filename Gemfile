@@ -36,6 +36,8 @@ gem 'kaminari'
 
 gem "cocoon"
 
+gem 'aasm'
+
 # Use unicorn as the app server
 # gem 'unicorn'
 

@@ -38,7 +38,7 @@ ActiveRecord::Schema.define(version: 20150324134803) do
     t.string   "inceptor"
     t.string   "saleman"
     t.integer  "creator_id"
-    t.string   "state"
+    t.string   "aasm_state"
     t.datetime "created_at"
     t.datetime "updated_at"
   end

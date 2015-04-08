@@ -8,7 +8,7 @@ class CreateOrders < ActiveRecord::Migration
       t.string :inceptor
       t.string :saleman
       t.integer :creator_id
-      t.string :state
+      t.string :aasm_state
 
       t.timestamps
     end

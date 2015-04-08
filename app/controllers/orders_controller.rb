@@ -1,5 +1,8 @@
 class OrdersController < ApplicationController
-  before_action :set_order, only: [:show, :edit, :update, :destroy]
+  before_action :set_order, only: [ :show, :edit, :update, :destroy,
+                                    :to_pand, :pand_pass, :pand_back,
+                                    :to_deliver, :to_cancel ]
+  before_action(only: [:new, :create, :edit, :update]) { can_access("前台客服") }
 
   # GET /orders
   # GET /orders.json
@@ -60,6 +63,56 @@ class OrdersController < ApplicationController
       format.html { redirect_to orders_url, notice: 'Order was successfully destroyed.' }
       format.json { head :no_content }
     end
+  end
+
+  # 提交审核
+  def to_pand
+    raise "当前用户不能进行这个操作！" unless current_user.is?("前台客服") || current_user.is?("系统管理员")
+    raise "不能提交审核，请检查该记录的状态！" unless @order.may_submit?
+    @order.submit!
+    render json: {msg: "提交审核操作成功！", state: @order.state_cn}
+  rescue Exception => e
+    render json: {msg: "#{e}"}.to_json
+  end
+
+  # 审核通过
+  def pand_pass
+    raise "当前用户不能进行这个操作！" unless current_user.is?("财务部门") || current_user.is?("系统管理员")
+    raise "不能审核，请检查该记录的状态！" unless @order.may_pass?
+    @order.pass!
+    render json: {msg: "审核通过操作成功！", state: @order.state_cn}
+  rescue Exception => e
+    render json: {msg: "#{e}"}.to_json
+  end
+
+  # 审核不通过
+  def pand_back
+    raise "当前用户不能进行这个操作！" unless current_user.is?("财务部门") || current_user.is?("系统管理员")
+    raise "不能审核，请检查该记录的状态！" unless @order.may_reject?
+    @order.reject!
+    render json: {msg: "审核驳回操作成功！", state: @order.state_cn}
+  rescue Exception => e
+    render json: {msg: "#{e}"}.to_json
+  end
+
+  # 发货
+  def to_deliver
+    raise "当前用户不能进行这个操作！" unless current_user.is?("仓库") || current_user.is?("系统管理员")
+    raise "不能发货，请检查该记录的状态！" unless @order.may_deliver?
+    @order.deliver!
+    render json: {msg: "发货操作成功！", state: @order.state_cn}
+  rescue Exception => e
+    render json: {msg: "#{e}"}.to_json
+  end
+
+  # 作废
+  def to_cancel
+    raise "当前用户不能进行这个操作！" unless current_user.is?("前台客服") || current_user.is?("系统管理员")
+    raise "不能作废，请检查该记录的状态！" unless @order.may_cancel?
+    @order.cancel!
+    render json: {msg: "作废操作成功！", state: @order.state_cn}
+  rescue Exception => e
+    render json: {msg: "#{e}"}.to_json
   end
 
   private
