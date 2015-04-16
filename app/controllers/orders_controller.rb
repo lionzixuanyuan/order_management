@@ -89,7 +89,8 @@ class OrdersController < ApplicationController
   def pand_back
     raise "当前用户不能进行这个操作！" unless current_user.is?("财务部门") || current_user.is?("系统管理员")
     raise "不能审核，请检查该记录的状态！" unless @order.may_reject?
-    raise "审核驳回理由不能为空！" unless params[:reason]
+    raise "审核驳回理由不能为空！" if params[:reason].blank?
+    # @order.
     @order.reject!
     render json: {msg: "审核驳回操作成功！", state: @order.state_cn}
   rescue Exception => e
@@ -100,7 +101,8 @@ class OrdersController < ApplicationController
   def to_deliver
     raise "当前用户不能进行这个操作！" unless current_user.is?("仓库") || current_user.is?("系统管理员")
     raise "不能发货，请检查该记录的状态！" unless @order.may_deliver?
-    raise "物流编号不能为空！" unless params[:shipment_code]
+    raise "物流编号不能为空！" if params[:shipment_code].blank?
+    @order.shipment_code = params[:shipment_code]
     @order.deliver!
     render json: {msg: "发货操作成功！", state: @order.state_cn}
   rescue Exception => e

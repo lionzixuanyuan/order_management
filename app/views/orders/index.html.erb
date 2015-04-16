@@ -119,11 +119,11 @@
     });
 
     // 发送ajax请求
-    function send_ajax (url, pid, data) {
+    function send_ajax (url, pid, post_data) {
       $.ajax({
         type: "POST",
         url: url,
-        data: data
+        data: post_data,
         success: function(data){  
           alert(data.msg);
           // $(".state_"+pid).text(data.state);
