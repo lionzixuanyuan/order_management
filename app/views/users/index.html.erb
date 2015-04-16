@@ -23,8 +23,8 @@
             <td><%= u.email %></td>
             <td><%= u.roles.join("、") %></td>
             <td>
-              <%= link_to "查看用户详情", user_path(u) %>|
-              <%= link_to "更改用户信息", edit_user_path(u) %>
+              <%= link_to "用户详情", user_path(u), class: "btn btn-default" %>
+              <%= link_to "编辑用户", edit_user_path(u), class: "btn btn-default" %>
             </td> 
           </tr>
         <% end %>

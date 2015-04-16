@@ -1,10 +1,27 @@
 class Order < ActiveRecord::Base
   include AASM
+
+  # validates :code, presence: true
+  validates :customer_id, presence: true
+  validates :totle_amount, presence: true
+  validates :totle_sum, presence: true
+  validates :saleman, presence: true
+
   has_many :order_details
+  has_many :pandding_logs
   belongs_to :customer
   belongs_to :creator, class_name: "User", foreign_key: "creator_id"
 
   accepts_nested_attributes_for :order_details, :allow_destroy => true
+
+  before_create :set_code
+
+  def set_code
+    prefix = Time.now.strftime('%Y%m')
+    last_serial = (Order.where("code like ?", "#{prefix}%").last.code[6, 4].to_i rescue 0)
+    serial = (last_serial + 1).to_s.rjust(4, "0") 
+    self.code = prefix + serial
+  end
 
   STATE_HASH = {
     creating: "待提交",

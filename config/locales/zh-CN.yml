@@ -3,12 +3,31 @@ zh-CN:
   activerecord:
     models:
       user: "用户"
+      product: "产品"
+      customer: "客户"
+      order: "订单"
     attributes:
       user:
         name: "用户名"
         email: "用户邮箱"
         password: "用户密码"
         password_confirmation: "确认密码"
+      product:
+        name: "产品名称及规格"
+        unit: "产品单位"
+        price: "产品单价"
+      customer:
+        name: "客户名称"
+        address: "客户地址"
+      order:
+        code: "订单编号"
+        customer_id: "客户"
+        totle_amount: "数量合计"
+        totle_sum: "金额合计"
+        inceptor: "签收人"
+        saleman: "业务员"
+        creator_id: "制单"
+        shipment_code: "物流编号"
 
   views:
     pagination:

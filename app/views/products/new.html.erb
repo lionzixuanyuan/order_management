@@ -2,12 +2,17 @@
   <div class="col-md-1"></div>
   <div class="col-md-10">
     <div class="page-header">
-      <h3>创建产品信息</h3>
+      <div class="row">
+        <div class="col-md-6">
+          <h3>创建产品信息</h3>
+        </div>
+        <div class="col-md-6" style='text-align: right;'>
+          <%= link_to '返回产品列表', products_path, class: "btn btn-default", style: "margin-top: 20px;" %>
+        </div>
+      </div>
     </div>
 
     <%= render 'form' %>
   </div>
   <div class="col-md-1"></div>
 </div>
-
-<%= link_to 'Back', products_path %>

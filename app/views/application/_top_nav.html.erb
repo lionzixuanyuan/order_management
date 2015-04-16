@@ -16,7 +16,7 @@
 
       <ul class="nav navbar-nav navbar-right">
         <% if current_user %>
-          <li><%= link_to current_user.name, user_path(current_user) %></li>
+          <li><%= link_to "#{current_user.name} <#{current_user.roles.join("、")}>", user_path(current_user) %></li>
           <li><%= link_to "退出", '/logout' %></li>
         <% else %>
           <li><%= link_to '登录', '/login' %></li>

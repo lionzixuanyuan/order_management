@@ -2,7 +2,14 @@
   <div class="col-md-1"></div>
   <div class="col-md-10">
     <div class="page-header">
-      <h3>产品信息列表</h3>
+      <div class="row">
+        <div class="col-md-6">
+          <h3>产品信息列表</h3>
+        </div>
+        <div class="col-md-6" style='text-align: right;'>
+          <%= link_to '新建产品', new_product_path, class: "btn btn-default", style: "margin-top: 20px;" %>
+        </div>
+      </div>
     </div>
 
     <table class="table table-bordered table-hover">
@@ -23,15 +30,14 @@
             <td><%= u.unit %></td>
             <td><%= u.price %></td>
             <td>
-              <%= link_to "查看产品详情", product_path(u) %>|
-              <%= link_to "更改产品信息", edit_product_path(u) %>
+              <%= link_to "查看产品详情", product_path(u), class: "btn btn-default" %>
+              <%= link_to "更改产品信息", edit_product_path(u), class: "btn btn-default" %>
             </td> 
           </tr>
         <% end %>
       </tbody>
     </table>
     <%= paginate @products %>
-    <%= link_to 'New product', new_product_path, class: "button" %>
   </div>
   <div class="col-md-1"></div>
 </div>

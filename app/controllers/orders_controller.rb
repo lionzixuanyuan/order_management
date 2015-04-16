@@ -18,11 +18,16 @@ class OrdersController < ApplicationController
   # GET /orders/new
   def new
     @order = Order.new
+    @order.creator = current_user
     @order.order_details.build
   end
 
   # GET /orders/1/edit
   def edit
+    unless @order.may_submit?
+      flash[:notice] = "目前该订单的状态不允许进行编辑操作！"
+      redirect_to '/' 
+    end
   end
 
   # POST /orders
@@ -90,7 +95,7 @@ class OrdersController < ApplicationController
     raise "当前用户不能进行这个操作！" unless current_user.is?("财务部门") || current_user.is?("系统管理员")
     raise "不能审核，请检查该记录的状态！" unless @order.may_reject?
     raise "审核驳回理由不能为空！" if params[:reason].blank?
-    # @order.
+    PanddingLog.create(order: @order, user: current_user, reason: params[:reason])
     @order.reject!
     render json: {msg: "审核驳回操作成功！", state: @order.state_cn}
   rescue Exception => e

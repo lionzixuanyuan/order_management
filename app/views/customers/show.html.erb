@@ -2,7 +2,15 @@
   <div class="col-md-1"></div>
   <div class="col-md-10">
     <div class="page-header">
-      <h3>客户信息详情</h3>
+      <div class="row">
+        <div class="col-md-6">
+          <h3>客户信息详情</h3>
+        </div>
+        <div class="col-md-6" style='text-align: right;'>
+          <%= link_to '编辑客户', edit_customer_path(@customer), class: "btn btn-default", style: "margin-top: 20px;" %>
+          <%= link_to '返回客户列表', customers_path, class: "btn btn-default", style: "margin-top: 20px;" %>
+        </div>
+      </div>
     </div>
 
     <div class="jumbotron">
@@ -22,7 +30,3 @@
   </div>
   <div class="col-md-1"></div>
 </div>
-
-
-<%= link_to 'Edit', edit_customer_path(@customer) %> |
-<%= link_to 'Back', customers_path %>

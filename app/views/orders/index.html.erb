@@ -6,9 +6,9 @@
         <div class="col-md-10">
           <h3>订单信息列表</h3>
         </div>
-        <div class="col-md-2">
+        <div class="col-md-2" style='text-align: right;'>
           <% if can_access("前台客服") %>
-            <%= link_to '新建订单', new_order_path, class: "btn btn-default", style: "margin-top: 20px;" %>
+            <%= link_to '新建订单', new_order_path, class: "btn btn-cs", style: "margin-top: 20px;" %>
           <% end %>
         </div>
       </div>
@@ -43,21 +43,21 @@
             <td><%= u.creator.name if u.creator %></td>
             <td class="state_<%= u.id %>"><%= u.state_cn %></td>
             <td>
-              <%= link_to "查看订单详情", order_path(u), class: "btn btn-default" %>
-              <%= link_to "更改订单信息", edit_order_path(u), class: "btn btn-default" %>
+              <%= link_to "订单详情", order_path(u), class: "btn btn-default" %>
               
               <% if u.may_submit? && can_access("前台客服") %>
-                <button type="button" class="btn btn-default to_pand" p-id="<%= u.id %>">提交审核</button>
+                <%= link_to "编辑订单", edit_order_path(u), class: "btn btn-cs" %>
+                <button type="button" class="btn btn-cs to_pand" p-id="<%= u.id %>">提交审核</button>
               <% end %>
               <% if u.panding? && can_access("财务部门") %>
-                <button type="button" class="btn btn-default pand_pass" p-id="<%= u.id %>">审核通过</button>
-                <button type="button" class="btn btn-default pand_back" p-id="<%= u.id %>">审核驳回</button>
+                <button type="button" class="btn btn-fa pand_pass" p-id="<%= u.id %>">审核通过</button>
+                <button type="button" class="btn btn-fa pand_back" p-id="<%= u.id %>">审核驳回</button>
               <% end %>
               <% if u.may_deliver? && can_access("仓库") %>
-                <button type="button" class="btn btn-default to_deliver" p-id="<%= u.id %>">发货</button>
+                <button type="button" class="btn btn-stm to_deliver" p-id="<%= u.id %>">发货</button>
               <% end %>
               <% if u.may_cancel? && can_access("前台客服") %>
-                <button type="button" class="btn btn-default to_cancel" p-id="<%= u.id %>">作废</button>
+                <button type="button" class="btn btn-cs to_cancel" p-id="<%= u.id %>">作废</button>
               <% end %>
 
 
