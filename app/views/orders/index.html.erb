@@ -77,42 +77,53 @@
     $("button.to_pand").on("click", function(){
       var pid = $(this).attr("p-id");
       var url = "/orders/"+pid+"/to_pand";
-      send_ajax(url, pid);
+      send_ajax(url, pid, "");
     });
 
     // 点击审核通过按钮
     $("button.pand_pass").on("click", function(){
       var pid = $(this).attr("p-id");
       var url = "/orders/"+pid+"/pand_pass";
-      send_ajax(url, pid);
+      send_ajax(url, pid, "");
     });
 
     // 点击审核驳回按钮
     $("button.pand_back").on("click", function(){
+      var reason = prompt("请输入审核驳回理由！","")
+      // if ($.trim(reason) == "") {
+      //   alert("审核驳回理由不能为空！");
+      //   return false;
+      // };
       var pid = $(this).attr("p-id");
       var url = "/orders/"+pid+"/pand_back";
-      send_ajax(url, pid);
+      send_ajax(url, pid, {"reason": reason});
     });
 
     // 点击发货按钮
     $("button.to_deliver").on("click", function(){
+      var shipment_code = prompt("请输入物流编号！","")
+      // if ($.trim(shipment_code) == "") {
+      //   alert("物流编号不能为空！");
+      //   return false;
+      // };
       var pid = $(this).attr("p-id");
       var url = "/orders/"+pid+"/to_deliver";
-      send_ajax(url, pid);
+      send_ajax(url, pid, {"shipment_code": shipment_code});
     });
 
     // 点击作废按钮
     $("button.to_cancel").on("click", function(){
       var pid = $(this).attr("p-id");
       var url = "/orders/"+pid+"/to_cancel";
-      send_ajax(url, pid);
+      send_ajax(url, pid, "");
     });
 
     // 发送ajax请求
-    function send_ajax (url, pid) {
+    function send_ajax (url, pid, data) {
       $.ajax({
         type: "POST",
         url: url,
+        data: data
         success: function(data){  
           alert(data.msg);
           // $(".state_"+pid).text(data.state);
