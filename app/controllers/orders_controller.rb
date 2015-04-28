@@ -74,8 +74,11 @@ class OrdersController < ApplicationController
   def to_pand
     raise "当前用户不能进行这个操作！" unless current_user.is?("前台客服") || current_user.is?("系统管理员")
     raise "不能提交审核，请检查该记录的状态！" unless @order.may_submit?
-    @order.submit!
-    render json: {msg: "提交审核操作成功！", state: @order.state_cn}
+    if @order.submit!
+      render json: {msg: "提交审核操作成功！", state: @order.state_cn}
+    else
+      raise "发生异常，操作失败！"
+    end
   rescue Exception => e
     render json: {msg: "#{e}"}.to_json
   end
@@ -84,8 +87,11 @@ class OrdersController < ApplicationController
   def pand_pass
     raise "当前用户不能进行这个操作！" unless current_user.is?("财务部门") || current_user.is?("系统管理员")
     raise "不能审核，请检查该记录的状态！" unless @order.may_pass?
-    @order.pass!
-    render json: {msg: "审核通过操作成功！", state: @order.state_cn}
+    if @order.pass!
+      render json: {msg: "审核通过操作成功！", state: @order.state_cn}
+    else
+      raise "发生异常，操作失败！"
+    end
   rescue Exception => e
     render json: {msg: "#{e}"}.to_json
   end
@@ -95,9 +101,14 @@ class OrdersController < ApplicationController
     raise "当前用户不能进行这个操作！" unless current_user.is?("财务部门") || current_user.is?("系统管理员")
     raise "不能审核，请检查该记录的状态！" unless @order.may_reject?
     raise "审核驳回理由不能为空！" if params[:reason].blank?
-    PanddingLog.create(order: @order, user: current_user, reason: params[:reason])
-    @order.reject!
-    render json: {msg: "审核驳回操作成功！", state: @order.state_cn}
+    ActiveRecord::Base.transaction do
+      PanddingLog.create!(order: @order, user: current_user, reason: params[:reason])
+      if @order.reject!
+        render json: {msg: "审核驳回操作成功！", state: @order.state_cn}
+      else
+        raise "发生异常，操作失败！"
+      end
+    end
   rescue Exception => e
     render json: {msg: "#{e}"}.to_json
   end
@@ -108,8 +119,11 @@ class OrdersController < ApplicationController
     raise "不能发货，请检查该记录的状态！" unless @order.may_deliver?
     raise "物流编号不能为空！" if params[:shipment_code].blank?
     @order.shipment_code = params[:shipment_code]
-    @order.deliver!
-    render json: {msg: "发货操作成功！", state: @order.state_cn}
+    if @order.deliver!
+      render json: {msg: "发货操作成功！", state: @order.state_cn}
+    else
+      raise "发生异常，操作失败！"
+    end
   rescue Exception => e
     render json: {msg: "#{e}"}.to_json
   end
@@ -118,8 +132,11 @@ class OrdersController < ApplicationController
   def to_cancel
     raise "当前用户不能进行这个操作！" unless current_user.is?("前台客服") || current_user.is?("系统管理员")
     raise "不能作废，请检查该记录的状态！" unless @order.may_cancel?
-    @order.cancel!
-    render json: {msg: "作废操作成功！", state: @order.state_cn}
+    if @order.cancel!
+      render json: {msg: "作废操作成功！", state: @order.state_cn}
+    else
+      raise "发生异常，操作失败！"
+    end
   rescue Exception => e
     render json: {msg: "#{e}"}.to_json
   end

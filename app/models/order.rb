@@ -53,18 +53,23 @@ class Order < ActiveRecord::Base
     end
 
     # 审核不通过
+    # 必须填写驳回日志，通过事务处理
     event :reject do
       transitions :from => :panding, :to => :creating
     end
 
     # 出货
     event :deliver do
-      transitions :from => :passed, :to => :delivered
+      transitions :from => :passed, :to => :delivered, :guard => :got_shipment_code?
     end
 
     # 作废
     event :cancel do
       transitions :from => :creating, :to => :cancelled
     end
+  end
+
+  def got_shipment_code?
+    self.shipment_code.present?
   end
 end

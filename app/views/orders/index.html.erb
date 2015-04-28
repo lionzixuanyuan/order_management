@@ -13,7 +13,7 @@
         </div>
       </div>
     </div>
-    <table class="table table-bordered table-hover">
+    <table class="table table-condensed table-bordered table-hover">
       <thead>
         <tr>
           <th>#</th>
@@ -53,14 +53,12 @@
                 <button type="button" class="btn btn-fa pand_pass" p-id="<%= u.id %>">审核通过</button>
                 <button type="button" class="btn btn-fa pand_back" p-id="<%= u.id %>">审核驳回</button>
               <% end %>
-              <% if u.may_deliver? && can_access("仓库") %>
+              <% if u.passed? && can_access("仓库") %>
                 <button type="button" class="btn btn-stm to_deliver" p-id="<%= u.id %>">发货</button>
               <% end %>
               <% if u.may_cancel? && can_access("前台客服") %>
                 <button type="button" class="btn btn-cs to_cancel" p-id="<%= u.id %>">作废</button>
               <% end %>
-
-
             </td> 
           </tr>
         <% end %>
@@ -72,64 +70,7 @@
 </div>
 
 <script type="text/javascript">
-  $(document).ready(function(){
-    // 点击提交审核按钮
-    $("button.to_pand").on("click", function(){
-      var pid = $(this).attr("p-id");
-      var url = "/orders/"+pid+"/to_pand";
-      send_ajax(url, pid, "");
-    });
-
-    // 点击审核通过按钮
-    $("button.pand_pass").on("click", function(){
-      var pid = $(this).attr("p-id");
-      var url = "/orders/"+pid+"/pand_pass";
-      send_ajax(url, pid, "");
-    });
-
-    // 点击审核驳回按钮
-    $("button.pand_back").on("click", function(){
-      var reason = prompt("请输入审核驳回理由！","")
-      // if ($.trim(reason) == "") {
-      //   alert("审核驳回理由不能为空！");
-      //   return false;
-      // };
-      var pid = $(this).attr("p-id");
-      var url = "/orders/"+pid+"/pand_back";
-      send_ajax(url, pid, {"reason": reason});
-    });
-
-    // 点击发货按钮
-    $("button.to_deliver").on("click", function(){
-      var shipment_code = prompt("请输入物流编号！","")
-      // if ($.trim(shipment_code) == "") {
-      //   alert("物流编号不能为空！");
-      //   return false;
-      // };
-      var pid = $(this).attr("p-id");
-      var url = "/orders/"+pid+"/to_deliver";
-      send_ajax(url, pid, {"shipment_code": shipment_code});
-    });
-
-    // 点击作废按钮
-    $("button.to_cancel").on("click", function(){
-      var pid = $(this).attr("p-id");
-      var url = "/orders/"+pid+"/to_cancel";
-      send_ajax(url, pid, "");
-    });
-
-    // 发送ajax请求
-    function send_ajax (url, pid, post_data) {
-      $.ajax({
-        type: "POST",
-        url: url,
-        data: post_data,
-        success: function(data){  
-          alert(data.msg);
-          // $(".state_"+pid).text(data.state);
-          location.reload();
-        }
-      });
-    }
-  });
+  // controller & action
+  var current_controller = "<%= params[:controller] %>";
+  var current_action = "<%= params[:action] %>";
 </script>
