@@ -17,6 +17,9 @@
 //= require cocoon
 //= require bootstrap
 //= require bootstrap-combobox
+//= require moment
+//= require moment/zh-cn
+//= require bootstrap-datetimepicker
 //= require_tree .
 
 function convertCurrency(currencyDigits) {
@@ -158,6 +161,20 @@ function convertCurrency(currencyDigits) {
 $(document).ready(function() {
   console.log(current_controller);
   console.log(current_action);
+
+  // 初始化日历控件
+  $('.datetimepicker4').datetimepicker({
+    format: "YYYY-MM-DD",
+    calendarWeeks: true
+  });
+
+  // 重置查询条件
+  $('form').on("click", "#search_reset", function(){
+    var form_node = $(this).parents("form")
+    form_node.find("input").val("");
+    form_node.find("select").val("");
+    // return false;
+  })
 
   switch (current_controller) {
     case "orders":

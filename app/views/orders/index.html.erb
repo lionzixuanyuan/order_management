@@ -13,6 +13,38 @@
         </div>
       </div>
     </div>
+
+    <%= search_form_for @q, class: "form-inline", html: {style: "margin-bottom: 10px;"} do |f| %>
+      <div class="form-group">
+        <label class="sr-only" for="q_code_cont"></label>
+        <%= f.search_field :code_cont, class: "form-control", placeholder: "订单编号" %>
+      </div>
+
+      <div class="form-group">
+        <label class="sr-only" for="q_customer_name_cont"></label>
+        <%= f.search_field :customer_name_cont, class: "form-control", placeholder: "客户名称" %>
+      </div>
+
+      <div class="form-group">
+        <label class="sr-only" for="q_pass_time_gteq"></label>
+        <%= f.search_field :pass_time_gteq, class: "form-control datetimepicker4", placeholder: "审核通过起始日期" %>
+      </div>
+
+      <div class="form-group">
+        <label class="sr-only" for="q_pass_time_lteq"></label>
+        <%= f.search_field :pass_time_lteq, class: "form-control datetimepicker4", placeholder: "审核通过结束日期" %>
+      </div>
+
+      <div class="form-group">
+        <label class="sr-only" for="q_pass_time_lteq"></label>
+        <%= f.select :aasm_state_eq, options_for_select(Order::STATE_HASH.invert, @q.aasm_state_eq), {include_blank: "请选择状态"}, {:class => 'form-control'} %>
+      </div>
+
+      <button type="submit" class="btn btn-primary">查询</button>
+      <button type="submit" id="search_reset" class="btn btn-warning">重置</button>
+    <% end %>
+
+
     <table class="table table-condensed table-bordered table-hover">
       <thead>
         <tr>

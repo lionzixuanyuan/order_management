@@ -48,7 +48,7 @@ class Order < ActiveRecord::Base
     end
 
     # 审核通过
-    event :pass do
+    event :pass, :after => :update_pass_time do
       transitions :from => :panding, :to => :passed
     end
 
@@ -71,5 +71,9 @@ class Order < ActiveRecord::Base
 
   def got_shipment_code?
     self.shipment_code.present?
+  end
+
+  def update_pass_time
+    self.update_attribute("pass_time", Time.now)
   end
 end

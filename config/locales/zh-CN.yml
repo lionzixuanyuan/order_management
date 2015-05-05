@@ -28,6 +28,8 @@ zh-CN:
         saleman: "业务员"
         creator_id: "制单"
         shipment_code: "物流编号"
+        code_cont: "订单编号"
+        customer_name_cont: "客户"
 
   views:
     pagination:

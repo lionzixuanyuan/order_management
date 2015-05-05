@@ -33,11 +33,16 @@ gem 'bcrypt', '~> 3.1.7'
 gem 'rails-assets-bootstrap'
 gem 'rails-assets-bootstrap-combobox'
 
+gem 'momentjs-rails', '>= 2.8.1'
+gem 'bootstrap3-datetimepicker-rails', '~> 4.0.0'
+
 gem 'kaminari'
 
 gem "cocoon"
 
 gem 'aasm'
+
+gem 'ransack'
 
 # Use unicorn as the app server
 # gem 'unicorn'
