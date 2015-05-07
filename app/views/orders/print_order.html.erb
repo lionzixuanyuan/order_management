@@ -1,0 +1,76 @@
+<div>
+
+  <table class="table table-bordered print" style="margin: 20px;">
+    <tr>
+      <td colspan='7' align='center' style='padding: 2px;'>出货单</td>
+    </tr>
+    <tr>
+      <td colspan='7' align='center'>商贸有限公司 电话：XXXX</td>
+    </tr>
+    <tr>
+      <td colspan='1' align='center'>客户名称：</td>
+      <td colspan='2'><%= @order.customer.name if @order.customer %></td>
+      <td colspan='1' align='center'>订单编号：</td>
+      <td colspan='1'><%= @order.code %></td>
+      <td colspan='1' align='center'>物流编号:</td>
+      <td colspan='1' align='center'><%= @order.shipment_code %></td>
+    </tr>
+    <tr>
+      <td colspan='1' align='center'>客户地址：</td>
+      <td colspan='3'><%= @order.customer.address if @order.customer %></td>
+      <td colspan='1' align='center'>时间：</td>
+      <td colspan='2'><%= @order.created_at.strftime('%Y-%m-%d %H:%M:%S') %></td>
+    </tr>
+    <tr>
+      <td></td>
+      <td align='center'>品名及规格</td>
+      <td align='center'>单位</td>
+      <td align='center'>数量</td>
+      <td align='center'>价格</td>
+      <td align='center'>折扣（％）</td>
+      <td align='center'>金额</td>
+    </tr>
+    <% @order.order_details.each_with_index do |d, index| %>
+      <tr>
+        <td><%= index + 1 %></td>
+        <td><%= d.product.name if d.product %></td>
+        <td><%= d.product.unit if d.product %></td>
+        <td><%= d.amount %></td>
+        <td><%= d.product.price if d.product %></td>
+        <td><%= d.discount %></td>
+        <td><%= d.sum %></td>
+      </tr>
+    <% end %>
+    <tr>
+      <td colspan='3' align='center'>数量合计</td>
+      <td><%= @order.totle_amount %></td>
+      <td colspan='3'></td>
+    </tr>
+    <tr>
+      <td colspan='3' align='center'>金额合计</td>
+      <td colspan='3'><p class="traditional_price" style="margin: 0;"></p></td>
+      <td><%= @order.totle_sum %></td>
+    </tr>
+    <tr>
+      <td align='center'>签收人：</td>
+      <td colspan='2'></td>
+      <td align='center'>业务员：</td>
+      <td><%= @order.saleman %></td>
+      <td align='center'>制单：</td>
+      <td><%= @order.creator.name if @order.creator %></td>
+    </tr>
+  </table>
+
+</div>
+
+<script type="text/javascript">
+  // controller & action
+  var current_controller = "<%= params[:controller] %>";
+  var current_action = "<%= params[:action] %>";
+  // params
+  var totle_sum = "<%= @order.totle_sum %>"
+
+  window.print();
+</script>
+
+

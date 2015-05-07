@@ -15,6 +15,7 @@ Rails.application.routes.draw do
       post 'pand_back'
       post 'to_deliver'
       post 'to_cancel'
+      get 'print_order'
     end
   end
 

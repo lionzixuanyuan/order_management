@@ -18,6 +18,17 @@
 
 body { padding-top: 60px; }
 
+
+table.print > thead > tr > th,
+table.print > tbody > tr > th,
+table.print > tfoot > tr > th,
+table.print > thead > tr > td,
+table.print > tbody > tr > td,
+table.print > tfoot > tr > td {
+  padding: 2px;
+  text-align: center;
+}
+
 /*客服按钮样式*/
 .btn-cs {
   color: #fff;

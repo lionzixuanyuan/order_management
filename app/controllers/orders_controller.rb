@@ -1,5 +1,5 @@
 class OrdersController < ApplicationController
-  before_action :set_order, only: [ :show, :edit, :update, :destroy,
+  before_action :set_order, only: [ :show, :print_order, :edit, :update, :destroy,
                                     :to_pand, :pand_pass, :pand_back,
                                     :to_deliver, :to_cancel ]
   before_action(only: [:new, :create, :edit, :update]) { can_access("前台客服") }
@@ -15,6 +15,10 @@ class OrdersController < ApplicationController
   # GET /orders/1
   # GET /orders/1.json
   def show
+  end
+
+  def print_order
+    render layout: "print"
   end
 
   # GET /orders/new
@@ -118,9 +122,9 @@ class OrdersController < ApplicationController
   # 发货
   def to_deliver
     raise "当前用户不能进行这个操作！" unless current_user.is?("仓库") || current_user.is?("系统管理员")
-    raise "不能发货，请检查该记录的状态！" unless @order.may_deliver?
     raise "物流编号不能为空！" if params[:shipment_code].blank?
     @order.shipment_code = params[:shipment_code]
+    raise "不能发货，请检查该记录的状态！" unless @order.may_deliver?
     if @order.deliver!
       render json: {msg: "发货操作成功！", state: @order.state_cn}
     else

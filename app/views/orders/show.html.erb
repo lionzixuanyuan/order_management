@@ -87,6 +87,9 @@
           <% if @order.passed? && can_access("仓库") %>
             <button type="button" class="btn btn-stm to_deliver" p-id="<%= @order.id %>">发货</button>
           <% end %>
+          <% if @order.delivered? && can_access("仓库") %>
+            <%= link_to "打印", print_order_order_path(@order), class: "btn btn-stm", style:"color: #FFF;" %>
+          <% end %>
           <% if @order.may_cancel? && can_access("前台客服") %>
             <button type="button" class="btn btn-cs to_cancel" p-id="<%= @order.id %>">作废</button>
           <% end %>

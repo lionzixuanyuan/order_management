@@ -11,9 +11,7 @@
 // about supported directives.
 //
 //= require jquery
-//= require jquery.turbolinks
 //= require jquery_ujs
-//= require turbolinks
 //= require cocoon
 //= require bootstrap
 //= require bootstrap-combobox
@@ -153,6 +151,10 @@ function convertCurrency(currencyDigits) {
       success: function(data){  
         alert(data.msg);
         // $(".state_"+pid).text(data.state);
+        if (data.msg == "发货操作成功！") {
+          console.log("a#print_"+pid);
+          window.open("/orders/"+pid+"/print_order",'_blank');
+        };
         location.reload();
       }
     });
@@ -225,6 +227,9 @@ $(document).ready(function() {
             var url = "/orders/"+pid+"/to_cancel";
             send_ajax(url, pid, "");
           });
+          break;
+        case "print_order":
+          $(".traditional_price").text(convertCurrency(totle_sum));
           break;
         case "show":
           // orders show
