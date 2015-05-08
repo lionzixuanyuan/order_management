@@ -27,16 +27,18 @@
     </div>
   </div>
 
-  <div class="form-group">
-    <label for="user_roles" class="col-sm-2 control-label">用户角色</label>
-    <div class="col-sm-10">
+  <% if current_user && current_user.is?("系统管理员") %>
+    <div class="form-group">
+      <label for="user_roles" class="col-sm-2 control-label">用户角色</label>
+      <div class="col-sm-10">
 
-      <% ROLES.each do |role| -%>
-        <%= check_box_tag 'user[roles][]', role, @user.is?(role) %> <%= role %> <br>
-      <% end -%>
+        <% ROLES.each do |role| -%>
+          <%= check_box_tag 'user[roles][]', role, @user.is?(role) %> <%= role %> <br>
+        <% end -%>
 
+      </div>
     </div>
-  </div>
+  <% end %>
 
   <div class="form-group">
     <div class="col-sm-offset-2 col-sm-10">

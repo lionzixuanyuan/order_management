@@ -1,5 +1,24 @@
-<h1>New order</h1>
+<div class="row">
+  <div class="col-md-1"></div>
+  <div class="col-md-10">
+    <div class="page-header">
+      <div class="row">
+        <div class="col-md-6">
+          <h3>创建订单信息</h3>
+        </div>
+        <div class="col-md-6" style='text-align: right;'>
+          <%= link_to '返回订单列表', orders_path, class: "btn btn-default", style: "margin-top: 20px;" %>
+        </div>
+      </div>
+    </div>
 
-<%= render 'form' %>
+    <%= render 'form' %>
+  </div>
+  <div class="col-md-1"></div>
+</div>
 
-<%= link_to 'Back', orders_path %>
+<script type="text/javascript">
+  // controller & action
+  var current_controller = "<%= params[:controller] %>";
+  var current_action = "<%= params[:action] %>";
+</script>

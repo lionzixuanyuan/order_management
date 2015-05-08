@@ -12,7 +12,161 @@
  *
  *= require_tree .
  *= require bootstrap
+ *= require bootstrap-datetimepicker
  *= require_self
  */
 
 body { padding-top: 60px; }
+
+
+table.print > thead > tr > th,
+table.print > tbody > tr > th,
+table.print > tfoot > tr > th,
+table.print > thead > tr > td,
+table.print > tbody > tr > td,
+table.print > tfoot > tr > td {
+  padding: 2px;
+  text-align: center;
+}
+
+/*客服按钮样式*/
+.btn-cs {
+  color: #fff;
+  background-color: #ff3377;
+  border-color: #ff6699;
+}
+.btn-cs:hover,
+.btn-cs:focus,
+.btn-cs.focus,
+.btn-cs:active,
+.btn-cs:visited,
+.btn-cs.active,
+.open > .dropdown-toggle.btn-cs {
+  color: #fff;
+  background-color: #ff6680;
+  border-color: #ff66b3;
+}
+.btn-cs:active,
+.btn-cs.active,
+.open > .dropdown-toggle.btn-cs {
+  background-image: none;
+}
+.btn-cs.disabled,
+.btn-cs[disabled],
+fieldset[disabled] .btn-cs,
+.btn-cs.disabled:hover,
+.btn-cs[disabled]:hover,
+fieldset[disabled] .btn-cs:hover,
+.btn-cs.disabled:focus,
+.btn-cs[disabled]:focus,
+fieldset[disabled] .btn-cs:focus,
+.btn-cs.disabled.focus,
+.btn-cs[disabled].focus,
+fieldset[disabled] .btn-cs.focus,
+.btn-cs.disabled:active,
+.btn-cs[disabled]:active,
+fieldset[disabled] .btn-cs:active,
+.btn-cs.disabled.active,
+.btn-cs[disabled].active,
+fieldset[disabled] .btn-cs.active {
+  background-color: #ff3377;
+  border-color: #ff6699;
+}
+.btn-cs .badge {
+  color: #ff3377;
+  background-color: #fff;
+}
+
+/*财务按钮样式*/
+.btn-fa {
+  color: #fff;
+  background-color: #cc66ff;
+  border-color: #a666ff;
+}
+.btn-fa:hover,
+.btn-fa:focus,
+.btn-fa.focus,
+.btn-fa:active,
+.btn-fa.active,
+.open > .dropdown-toggle.btn-fa {
+  color: #fff;
+  background-color: #bf66ff;
+  border-color: #d966ff;
+}
+.btn-fa:active,
+.btn-fa.active,
+.open > .dropdown-toggle.btn-fa {
+  background-image: none;
+}
+.btn-fa.disabled,
+.btn-fa[disabled],
+fieldset[disabled] .btn-fa,
+.btn-fa.disabled:hover,
+.btn-fa[disabled]:hover,
+fieldset[disabled] .btn-fa:hover,
+.btn-fa.disabled:focus,
+.btn-fa[disabled]:focus,
+fieldset[disabled] .btn-fa:focus,
+.btn-fa.disabled.focus,
+.btn-fa[disabled].focus,
+fieldset[disabled] .btn-fa.focus,
+.btn-fa.disabled:active,
+.btn-fa[disabled]:active,
+fieldset[disabled] .btn-fa:active,
+.btn-fa.disabled.active,
+.btn-fa[disabled].active,
+fieldset[disabled] .btn-fa.active {
+  background-color: #cc66ff;
+  border-color: #a666ff;
+}
+.btn-fa .badge {
+  color: #cc66ff;
+  background-color: #fff;
+}
+
+/*仓库按钮样式*/
+.btn-stm {
+  color: #fff;
+  background-color: #3399cc;
+  border-color: #33bfcc;
+}
+.btn-stm:hover,
+.btn-stm:focus,
+.btn-stm.focus,
+.btn-stm:active,
+.btn-stm.active,
+.open > .dropdown-toggle.btn-stm {
+  color: #fff;
+  background-color: #3380cc;
+  border-color: #3373cc;
+}
+.btn-stm:active,
+.btn-stm.active,
+.open > .dropdown-toggle.btn-stm {
+  background-image: none;
+}
+.btn-stm.disabled,
+.btn-stm[disabled],
+fieldset[disabled] .btn-stm,
+.btn-stm.disabled:hover,
+.btn-stm[disabled]:hover,
+fieldset[disabled] .btn-stm:hover,
+.btn-stm.disabled:focus,
+.btn-stm[disabled]:focus,
+fieldset[disabled] .btn-stm:focus,
+.btn-stm.disabled.focus,
+.btn-stm[disabled].focus,
+fieldset[disabled] .btn-stm.focus,
+.btn-stm.disabled:active,
+.btn-stm[disabled]:active,
+fieldset[disabled] .btn-stm:active,
+.btn-stm.disabled.active,
+.btn-stm[disabled].active,
+fieldset[disabled] .btn-stm.active {
+  background-color: #3399cc;
+  border-color: #33bfcc;
+}
+.btn-stm .badge {
+  color: #3399cc;
+  background-color: #fff;
+}

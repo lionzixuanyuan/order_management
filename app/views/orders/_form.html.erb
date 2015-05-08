@@ -1,49 +1,211 @@
 <%= form_for(@order) do |f| %>
   <% if @order.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(@order.errors.count, "error") %> prohibited this order from being saved:</h2>
-
-      <ul>
-      <% @order.errors.full_messages.each do |message| %>
-        <li><%= message %></li>
-      <% end %>
-      </ul>
+    <div class="row">
+      <div class="col-sm-2"></div>
+      <div class="col-sm-8">
+        <div class="alert alert-warning alert-danger" role="alert">
+          <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+          <h4><%= @order.errors.count %>个错误导致保存失败:</h4>
+          <ul>
+          <% @order.errors.full_messages.each do |message| %>
+            <li><%= message %></li>
+          <% end %>
+          </ul>
+        </div>
+      </div>
+      <div class="col-sm-2"></div>
     </div>
   <% end %>
 
-  <div class="field">
-    <%= f.label :code %><br>
-    <%= f.text_field :code %>
-  </div>
-  <div class="field">
-    <%= f.label :customer_id %><br>
-    <%= f.number_field :customer_id %>
-  </div>
-  <div class="field">
-    <%= f.label :totle_amount %><br>
-    <%= f.number_field :totle_amount %>
-  </div>
-  <div class="field">
-    <%= f.label :totle_sum %><br>
-    <%= f.text_field :totle_sum %>
-  </div>
-  <div class="field">
-    <%= f.label :inceptor %><br>
-    <%= f.text_field :inceptor %>
-  </div>
-  <div class="field">
-    <%= f.label :saleman %><br>
-    <%= f.text_field :saleman %>
-  </div>
-  <div class="field">
-    <%= f.label :creator_id %><br>
-    <%= f.number_field :creator_id %>
-  </div>
-  <div class="field">
-    <%= f.label :statr %><br>
-    <%= f.text_field :statr %>
-  </div>
+  <table class="table table-bordered">
+    <thead>
+      <tr>
+        <th style="width: 90px;"></th>
+        <th></th>
+        <th style="width: 70px;"></th>
+        <th></th>
+        <th style="width: 70px;"></th>
+        <th style="width: 90px;"></th>
+        <th></th>
+      </tr>
+    </thead>
+    <tbody>
+      
+      <tr>
+        <td colspan='1'>客户名称：</td>
+        <td colspan='3'>
+          <%= f.collection_select :customer_id, Customer.all, :id, :name, {:prompt => true}, {:class=>'combobox form-control'} %>
+        </td>
+        <td colspan='1'>编号：</td>
+        <td colspan='2'>-</td>
+      </tr>
+      <tr>
+        <td colspan='1'>客户地址：</td>
+        <td colspan='3'><p id="address_ele"><%= @order.customer.address if @order.customer %></p></td>
+        <td colspan='1'>时间：</td>
+        <td colspan='2'>-</td>
+      </tr>
+      <tr>
+        <td><%= link_to_add_association '添加', f, :order_details, class: "btn btn-primary", role: "button" %></td>
+        <td>品名及规格</td>
+        <td>单位</td>
+        <td>数量</td>
+        <td>价格</td>
+        <td>折扣（％）</td>
+        <td>金额</td>
+      </tr>
+
+      <%= f.fields_for :order_details do |f| %>
+        <%= render "order_detail_fields", f: f %>
+      <% end %>
+
+      <tr>
+        <td colspan='3'>数量合计</td>
+        <td><%= f.number_field :totle_amount, class: "form-control", readonly: "readonly" %></td>
+        <td colspan='3'></td>
+      </tr>
+      <tr>
+        <td colspan='3'>金额合计</td>
+        <td colspan='3'><p class="traditional_price"></p></td>
+        <td>
+          <div class="input-group">
+            <span class="input-group-addon">¥</span>
+            <%= f.text_field :totle_sum, class: "form-control", readonly: "readonly" %>
+          </div>
+        </td>
+      </tr>
+      <tr>
+        <td>签收人：</td>
+        <td>-</td>
+        <td>业务员：</td>
+        <td colspan='2'><%= f.text_field :saleman, class: "form-control" %></td>
+        <td>制单：</td>
+        <td>
+          <%= @order.creator.name %>
+          <%= f.hidden_field :creator_id, class: "form-control" %>
+        </td>
+      </tr>
+    </tbody>
+  </table>
   <div class="actions">
-    <%= f.submit %>
+    <button type="submit" class="btn btn-default">提交</button>
   </div>
+
+  <script type="text/javascript">
+    $(document).ready(function(){
+      // init
+      var remove_button_amount = $("a.remove_fields").size();
+      $('.combobox').combobox();
+      check_to_hide_or_show_delete_link();
+      $("tr.order_detail").each(function(){
+        console.log($(this));
+        update_detail_fields($(this));
+      });
+      // init
+
+      $("form").on("change", "[name='order[customer_id]']", function(){
+        $.ajax({
+          type: "GET",
+          url: "/customers/" + $(this).val() + ".json",
+          success: function(data){  
+            $("#address_ele").text(data.address);
+          }
+        });
+      });
+
+      $("form").on("change", "[name$='[product_id]']", function(){
+        tr_node = $(this).parents("tr");
+        update_detail_fields(tr_node);
+      });
+
+      function update_detail_fields (tr_node) {
+        product_id = tr_node.find("[name$='[product_id]']").val();
+        amount = tr_node.find("[name$='[amount]']");
+        unit_node = tr_node.find(".unit_ele");
+        price_node = tr_node.find(".price_ele");
+
+        $.ajax({
+          type: "GET",
+          async:false,
+          url: "/products/" + product_id + ".json",
+          success: function(data){
+            amount.val(1);
+            unit_node.text(data.unit);
+            price_node.text(data.price);
+            update_detail_sum(price_node);
+            update_total_amount();
+          }
+        });
+      }
+
+      $("form").on("change", "[name$='[amount]']", function(){
+        update_detail_sum($(this));
+        update_total_amount();
+      });
+
+      $("form").on("change", "[name$='[discount]']", function(){
+        update_detail_sum($(this));
+      });
+
+      function update_detail_sum (node) {
+        tr_node = node.parents("tr");
+        price = parseInt(tr_node.find(".price_ele").text());
+        amount = tr_node.find("[name$='[amount]']").val();
+        discount = tr_node.find("[name$='[discount]']").val();
+        detail_sum_node = tr_node.find("[name$='[sum]']")
+        // 计算方法需要再校验一下
+        detail_sum = price * amount * discount / 100
+        detail_sum_node.val(detail_sum);
+        update_total_sum();
+      }
+
+      function update_total_sum () {
+        totle_sum = 0
+        $("[name$='[sum]']").each(function(){
+          totle_sum += parseInt($(this).val());
+        });
+        $("#order_totle_sum").val(totle_sum);
+        $(".traditional_price").text(convertCurrency(totle_sum));
+      }
+
+      function update_total_amount () {
+        console.log("ready");
+        totle_amount = 0
+        $("[name$='[amount]']").each(function(){
+          totle_amount += parseInt($(this).val());
+        });
+        $("#order_totle_amount").val(totle_amount);
+      }
+
+      $("form a.add_fields").
+      data("association-insertion-method", 'after').
+      data("association-insertion-node", 'tr.order_detail:last');
+
+      $('form')
+        .on('cocoon:after-insert', function(e, insertedItem) {
+          console.log("insert");
+          combobox = insertedItem.find(".combobox");
+          combobox.combobox();
+          remove_button_amount += 1;
+          check_to_hide_or_show_delete_link();
+        }).on("cocoon:before-remove", function() {
+          console.log("before remove");
+        }).on("cocoon:after-remove", function() {
+          console.log("remove");
+          update_total_sum();
+          update_total_amount();
+          remove_button_amount -= 1;
+          check_to_hide_or_show_delete_link();
+        });
+
+      function check_to_hide_or_show_delete_link () {
+        if (remove_button_amount <= 1) {
+          $('a.remove_fields').hide();
+        } else {
+          $('a.remove_fields').show();
+        }
+      }
+
+    });
+  </script>
 <% end %>

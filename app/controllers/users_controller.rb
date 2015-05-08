@@ -1,10 +1,11 @@
 class UsersController < ApplicationController
-  before_action :authorize, except: [:new, :create]
+  # before_action :authorize, except: [:new, :create]
+  skip_before_action :authorize, only: [:new, :create]
   before_action :is_admin?, only: [:index]
   before_action :set_user, only: [:show, :edit, :update, :destroy]
 
   def index
-    @users = User.all
+    @users = User.page(params[:page])
   end
 
   def show

@@ -1,12 +1,23 @@
 Rails.application.routes.draw do
 
-  resources :products
+  resources :panding_logs
+
+  resources :products, except: [:destroy]
 
   resources :order_details
 
-  resources :customers
+  resources :customers, except: [:destroy]
 
-  resources :orders
+  resources :orders, except: [:destroy] do
+    member do
+      post 'to_pand'
+      post 'pand_pass'
+      post 'pand_back'
+      post 'to_deliver'
+      post 'to_cancel'
+      get 'print_order'
+    end
+  end
 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
