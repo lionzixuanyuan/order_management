@@ -1,6 +1,6 @@
-<div>
+<div style="padding: 20px;">
 
-  <table class="table table-bordered print" style="margin: 20px;">
+  <table class="table table-bordered print">
     <tr>
       <td colspan='7' align='center' style='padding: 2px;'>出货单</td>
     </tr>
@@ -39,6 +39,17 @@
         <td><%= d.product.price if d.product %></td>
         <td><%= d.discount %></td>
         <td><%= d.sum %></td>
+      </tr>
+    <% end %>
+    <% (13 - @order.order_details.count).times do |index| %>
+      <tr>
+        <td><%= index + @order.order_details.count + 1 %></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
       </tr>
     <% end %>
     <tr>

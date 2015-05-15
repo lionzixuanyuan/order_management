@@ -55,8 +55,13 @@ class Order < ActiveRecord::Base
     # 审核不通过
     # 必须填写驳回日志，通过事务处理
     event :reject do
-      transitions :from => :panding, :to => :creating
+      transitions :from => [:panding, :passed], :to => :creating
     end
+
+    # # 物流驳回
+    # event :shipment_reject do
+    #   transitions :from => :passed, :to => :creating
+    # end
 
     # 出货
     event :deliver do

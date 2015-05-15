@@ -36,6 +36,8 @@ gem 'rails-assets-bootstrap-combobox'
 gem 'momentjs-rails', '>= 2.8.1'
 gem 'bootstrap3-datetimepicker-rails', '~> 4.0.0'
 
+gem 'rails-assets-fancybox'
+
 gem 'kaminari'
 
 gem "cocoon"

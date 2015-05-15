@@ -16,6 +16,7 @@ Rails.application.routes.draw do
       post 'to_deliver'
       post 'to_cancel'
       get 'print_order'
+      get 'fancybox_show'
     end
   end
 

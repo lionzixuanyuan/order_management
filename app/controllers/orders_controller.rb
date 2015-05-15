@@ -1,7 +1,7 @@
 class OrdersController < ApplicationController
   before_action :set_order, only: [ :show, :print_order, :edit, :update, :destroy,
                                     :to_pand, :pand_pass, :pand_back,
-                                    :to_deliver, :to_cancel ]
+                                    :to_deliver, :to_cancel, :fancybox_show ]
   before_action(only: [:new, :create, :edit, :update]) { can_access("前台客服") }
 
   # GET /orders
@@ -15,6 +15,10 @@ class OrdersController < ApplicationController
   # GET /orders/1
   # GET /orders/1.json
   def show
+  end
+
+  def fancybox_show
+    render layout: "content"
   end
 
   def print_order
@@ -78,7 +82,7 @@ class OrdersController < ApplicationController
 
   # 提交审核
   def to_pand
-    raise "当前用户不能进行这个操作！" unless current_user.is?("前台客服") || current_user.is?("系统管理员")
+    raise "当前用户不能进行这个操作！" unless current_user.is?("前台客服 系统管理员")
     raise "不能提交审核，请检查该记录的状态！" unless @order.may_submit?
     if @order.submit!
       render json: {msg: "提交审核操作成功！", state: @order.state_cn}
@@ -91,7 +95,7 @@ class OrdersController < ApplicationController
 
   # 审核通过
   def pand_pass
-    raise "当前用户不能进行这个操作！" unless current_user.is?("财务部门") || current_user.is?("系统管理员")
+    raise "当前用户不能进行这个操作！" unless current_user.is?("财务部门 系统管理员")
     raise "不能审核，请检查该记录的状态！" unless @order.may_pass?
     if @order.pass!
       render json: {msg: "审核通过操作成功！", state: @order.state_cn}
@@ -104,7 +108,7 @@ class OrdersController < ApplicationController
 
   # 审核不通过
   def pand_back
-    raise "当前用户不能进行这个操作！" unless current_user.is?("财务部门") || current_user.is?("系统管理员")
+    raise "当前用户不能进行这个操作！" unless current_user.is?("财务部门 仓库 系统管理员")
     raise "不能审核，请检查该记录的状态！" unless @order.may_reject?
     raise "审核驳回理由不能为空！" if params[:reason].blank?
     ActiveRecord::Base.transaction do
@@ -121,7 +125,7 @@ class OrdersController < ApplicationController
 
   # 发货
   def to_deliver
-    raise "当前用户不能进行这个操作！" unless current_user.is?("仓库") || current_user.is?("系统管理员")
+    raise "当前用户不能进行这个操作！" unless current_user.is?("仓库 系统管理员")
     raise "物流编号不能为空！" if params[:shipment_code].blank?
     @order.shipment_code = params[:shipment_code]
     raise "不能发货，请检查该记录的状态！" unless @order.may_deliver?
@@ -136,7 +140,7 @@ class OrdersController < ApplicationController
 
   # 作废
   def to_cancel
-    raise "当前用户不能进行这个操作！" unless current_user.is?("前台客服") || current_user.is?("系统管理员")
+    raise "当前用户不能进行这个操作！" unless current_user.is?("前台客服 系统管理员")
     raise "不能作废，请检查该记录的状态！" unless @order.may_cancel?
     if @order.cancel!
       render json: {msg: "作废操作成功！", state: @order.state_cn}

@@ -17,8 +17,9 @@ class User < ActiveRecord::Base
     end
   end
 
-  def is?(role)
-    roles.include?(role.to_s)
+  def is?(match_roles)
+    match_roles.split.each{|r| return true if roles.include?(r.to_s)}
+    false
   end
 
   # def self.customer_servers

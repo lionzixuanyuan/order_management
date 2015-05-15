@@ -18,6 +18,7 @@
 //= require moment
 //= require moment/zh-cn
 //= require bootstrap-datetimepicker
+//= require fancybox/source/jquery.fancybox
 //= require_tree .
 
 function convertCurrency(currencyDigits) {
@@ -164,6 +165,11 @@ $(document).ready(function() {
   console.log(current_controller);
   console.log(current_action);
 
+  $('.fancybox').fancybox({
+    padding : 0,
+    openEffect  : 'elastic'
+  });
+
   // 初始化日历控件
   $('.datetimepicker4').datetimepicker({
     format: "YYYY-MM-DD",
@@ -183,6 +189,8 @@ $(document).ready(function() {
       switch (current_action) {
         case "index":
           // orders index
+          // 定时刷行，间隔1分钟
+          setTimeout("location.reload()",60000)
           // 点击提交审核按钮
           $("button.to_pand").on("click", function(){
             var pid = $(this).attr("p-id");
@@ -286,6 +294,6 @@ $(document).ready(function() {
 
       break;
     default:
-      alert('>41');
+      // alert('no match action');
   };
 });

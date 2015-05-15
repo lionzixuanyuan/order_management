@@ -75,7 +75,7 @@
             <td><%= u.creator.name if u.creator %></td>
             <td class="state_<%= u.id %>"><%= u.state_cn %></td>
             <td>
-              <%= link_to "订单详情", order_path(u), class: "btn btn-default", target: "_blank" %>
+              <%= link_to "订单详情", fancybox_show_order_path(u), class: "btn btn-default fancybox fancybox.iframe", target: "_blank" %>
               
               <% if u.may_submit? && can_access("前台客服") %>
                 <%= link_to "编辑订单", edit_order_path(u), class: "btn btn-cs" %>
@@ -87,6 +87,7 @@
               <% end %>
               <% if u.passed? && can_access("仓库") %>
                 <button type="button" class="btn btn-stm to_deliver" p-id="<%= u.id %>">发货</button>
+                <button type="button" class="btn btn-stm pand_back" p-id="<%= u.id %>">物流驳回</button>
               <% end %>
               <% if u.delivered? && can_access("仓库") %>
                 <%= link_to "打印", print_order_order_path(u), id: "print_#{u.id}", class: "btn btn-stm", target: "_blank", style:"color: #FFF;" %>
