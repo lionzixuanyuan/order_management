@@ -34,7 +34,7 @@
       <tr>
         <td colspan='1'>客户名称：</td>
         <td colspan='3'>
-          <%= f.collection_select :customer_id, Customer.all, :id, :name, {:prompt => true}, {:class=>'combobox form-control'} %>
+          <%= f.collection_select :customer_id, Customer.all, :id, :show_text, {:prompt => true}, {:class=>'combobox form-control'} %>
         </td>
         <td colspan='1'>编号：</td>
         <td colspan='2'>-</td>
