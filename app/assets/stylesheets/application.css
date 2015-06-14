@@ -29,7 +29,7 @@ table.print > tfoot > tr > td {
   padding: 2px;
   text-align: center;
   font-size: 15px;
-  border: 2px solid black;
+  border: 1px solid black;
 }
 
 /*客服按钮样式*/
