@@ -28,7 +28,9 @@ table.print > tbody > tr > td,
 table.print > tfoot > tr > td {
   padding: 2px;
   text-align: center;
-  font-size: 14px;
+  font-family: "宋体,Arial,Microsoft YaHei,SimHei,SimSun";
+  font-size: 15px;
+  font-weight: bold;
   border: 1px solid black;
 }
 
