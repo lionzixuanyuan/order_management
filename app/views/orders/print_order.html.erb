@@ -1,15 +1,18 @@
-<div style="padding: 20px 30px;">
+<div style="padding: 20px 20px;">
 
-  <table class="table print">
+
+  <table class="table no-border">
     <tr>
-      <td colspan='7' align='center' style='padding: 2px;'><h4>出货单</h4></td>
+      <td colspan='6' align='center' style='padding: 2px;'>
+        <h3>出货单</h3>
+      </td>
     </tr>
     <tr>
-      <td colspan='7' align='center'>上海玺爱商贸有限公司 电话：021-61363281</td>
+      <td colspan='6' align='center'>上海玺爱商贸有限公司 电话：021-61363281</td>
     </tr>
     <tr>
       <td colspan='1' align='center'>客户名称：</td>
-      <td colspan='2'><%= @order.customer.name if @order.customer %></td>
+      <td colspan='1'><%= @order.customer.name if @order.customer %></td>
       <td colspan='1' align='center'>订单编号：</td>
       <td colspan='1'><%= @order.code %></td>
       <td colspan='1' align='center'>物流编号:</td>
@@ -17,10 +20,12 @@
     </tr>
     <tr>
       <td colspan='1' align='center'>客户地址：</td>
-      <td colspan='3'><%= @order.customer.address if @order.customer %></td>
+      <td colspan='2'><%= @order.customer.address if @order.customer %></td>
       <td colspan='1' align='center'>时间：</td>
       <td colspan='2'><%= @order.created_at.strftime('%Y-%m-%d %H:%M:%S') %></td>
     </tr>
+  </table>
+  <table class="table print">
     <tr>
       <td></td>
       <td align='center'>品名及规格</td>
@@ -41,7 +46,7 @@
         <td><%= d.sum %></td>
       </tr>
     <% end %>
-    <% (13 - @order.order_details.count).times do |index| %>
+    <% (10 - @order.order_details.count).times do |index| %>
       <tr>
         <td><%= index + @order.order_details.count + 1 %></td>
         <td></td>
@@ -62,9 +67,11 @@
       <td colspan='3'><p class="traditional_price" style="margin: 0;"></p></td>
       <td><%= @order.totle_sum %></td>
     </tr>
+  </table>
+  <table class="table no-border">
     <tr>
       <td align='center'>签收人：</td>
-      <td colspan='2'></td>
+      <td style='width: 150px;'></td>
       <td align='center'>业务员：</td>
       <td><%= @order.saleman %></td>
       <td align='center'>制单：</td>

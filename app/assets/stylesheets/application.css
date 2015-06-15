@@ -19,6 +19,23 @@
 
 body { padding-top: 60px; }
 
+table.print, .no-border {
+  margin-bottom: 0;
+}
+
+table.no-border > thead > tr > th,
+table.no-border > tbody > tr > th,
+table.no-border > tfoot > tr > th,
+table.no-border > thead > tr > td,
+table.no-border > tbody > tr > td,
+table.no-border > tfoot > tr > td {
+  padding: 2px;
+  text-align: center;
+  font-family: "宋体,Arial,Microsoft YaHei,SimHei,SimSun";
+  font-size: 17px;
+  font-weight: bold;
+  border: 0;
+}
 
 table.print > thead > tr > th,
 table.print > tbody > tr > th,
@@ -29,7 +46,7 @@ table.print > tfoot > tr > td {
   padding: 2px;
   text-align: center;
   font-family: "宋体,Arial,Microsoft YaHei,SimHei,SimSun";
-  font-size: 15px;
+  font-size: 17px;
   font-weight: bold;
   border: 1px solid black;
 }
