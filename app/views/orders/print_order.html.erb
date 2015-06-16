@@ -1,10 +1,9 @@
-<div style="padding: 20px 20px;">
-
+<div style="padding: 5px 10px;">
 
   <table class="table no-border">
     <tr>
       <td colspan='6' align='center' style='padding: 2px;'>
-        <h3>出货单</h3>
+        <h3 style="margin: 0;">出货单</h3>
       </td>
     </tr>
     <tr>
@@ -46,7 +45,7 @@
         <td><%= d.sum %></td>
       </tr>
     <% end %>
-    <% (10 - @order.order_details.count).times do |index| %>
+    <% (12 - @order.order_details.count).times do |index| %>
       <tr>
         <td><%= index + @order.order_details.count + 1 %></td>
         <td></td>
