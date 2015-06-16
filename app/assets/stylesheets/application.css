@@ -32,8 +32,8 @@ table.no-border > tfoot > tr > td {
   padding: 2px;
   text-align: center;
   font-family: "宋体,Arial,Microsoft YaHei,SimHei,SimSun";
-  font-size: 17px;
-  font-weight: bold;
+  font-size: 18px;
+  font-weight: normal;
   border: 0;
 }
 
@@ -46,8 +46,8 @@ table.print > tfoot > tr > td {
   padding: 2px;
   text-align: center;
   font-family: "宋体,Arial,Microsoft YaHei,SimHei,SimSun";
-  font-size: 17px;
-  font-weight: bold;
+  font-size: 18px;
+  font-weight: normal;
   border: 1px solid black;
 }
 
