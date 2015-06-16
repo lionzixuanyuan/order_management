@@ -3,25 +3,25 @@
   <table class="table no-border">
     <tr>
       <td colspan='6' align='center' style='padding: 2px;'>
-        <h3 style="margin: 0;">出货单</h3>
+        <h3 style="margin: 0;"><u>出&#12288;&#12288;货&#12288;&#12288;单</u></h3>
       </td>
     </tr>
     <tr>
       <td colspan='6' align='center'>上海玺爱商贸有限公司 电话：021-61363281</td>
     </tr>
     <tr>
-      <td colspan='1' align='center'>客户名称：</td>
-      <td colspan='1'><%= @order.customer.name if @order.customer %></td>
-      <td colspan='1' align='center'>订单编号：</td>
-      <td colspan='1'><%= @order.code %></td>
-      <td colspan='1' align='center'>物流编号:</td>
-      <td colspan='1' align='center'><%= @order.shipment_code %></td>
+      <td colspan='1' style="text-align: right;">客户名称：</td>
+      <td colspan='1' style="text-align: left;"><%= @order.customer.name if @order.customer %></td>
+      <td colspan='1' style="text-align: right;">订单编号：</td>
+      <td colspan='1' style="text-align: left;"><%= @order.code %></td>
+      <td colspan='1' style="text-align: right;">物流编号：</td>
+      <td colspan='1' style="text-align: left;"><%= @order.shipment_code %></td>
     </tr>
     <tr>
-      <td colspan='1' align='center'>客户地址：</td>
-      <td colspan='2'><%= @order.customer.address if @order.customer %></td>
-      <td colspan='1' align='center'>时间：</td>
-      <td colspan='2'><%= @order.created_at.strftime('%Y-%m-%d %H:%M:%S') %></td>
+      <td colspan='1' style="text-align: right;">客户地址：</td>
+      <td colspan='3' style="text-align: left;"><%= @order.customer.address if @order.customer %></td>
+      <td colspan='1' style="text-align: right;">时间：</td>
+      <td colspan='1' style="text-align: left;"><%= @order.created_at.strftime('%Y-%m-%d %H:%M:%S') %></td>
     </tr>
   </table>
   <table class="table print">
