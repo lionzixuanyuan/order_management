@@ -174,6 +174,14 @@
         $("[name$='[amount]']").each(function(){
           totle_amount += parseInt($(this).val());
         });
+
+        // 减去删除的数量
+        $("[name$='[_destroy]']").each(function(){
+          if ($(this).val() == "1") {
+            totle_amount -= 1;
+          };
+        });
+        
         $("#order_totle_amount").val(totle_amount);
       }
 
