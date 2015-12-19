@@ -149,7 +149,7 @@
 
       function update_detail_sum (node) {
         tr_node = node.parents("tr");
-        price = parseInt(tr_node.find(".price_ele").text());
+        price = parseFloat(tr_node.find(".price_ele").text());
         amount = tr_node.find("[name$='[amount]']").val();
         discount = tr_node.find("[name$='[discount]']").val();
         detail_sum_node = tr_node.find("[name$='[sum]']")
