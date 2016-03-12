@@ -8,7 +8,7 @@ Rails.application.routes.draw do
 
   resources :customers, except: [:destroy]
 
-  resources :orders, except: [:destroy] do
+  resources :orders do
     member do
       post 'to_pand'
       post 'pand_pass'

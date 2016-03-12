@@ -3,6 +3,7 @@ class OrdersController < ApplicationController
                                     :to_pand, :pand_pass, :pand_back,
                                     :to_deliver, :to_cancel, :fancybox_show ]
   before_action(only: [:new, :create, :edit, :update]) { can_access("前台客服") }
+  before_action(only: :destroy) { can_access("财务部门") }
 
   # GET /orders
   # GET /orders.json
@@ -75,7 +76,7 @@ class OrdersController < ApplicationController
   def destroy
     @order.destroy
     respond_to do |format|
-      format.html { redirect_to orders_url, notice: 'Order was successfully destroyed.' }
+      format.html { redirect_to orders_url, notice: '订单删除成功！' }
       format.json { head :no_content }
     end
   end

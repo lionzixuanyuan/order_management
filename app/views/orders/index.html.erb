@@ -95,6 +95,9 @@
               <% if u.may_cancel? && can_access("前台客服") %>
                 <button type="button" class="btn btn-cs to_cancel" p-id="<%= u.id %>">作废</button>
               <% end %>
+              <% if can_access("财务部门") %>
+                <%= link_to "删除订单", u, method: :delete, data: { confirm: '确定要删除此订单吗？'}, class: "btn btn-cs" %>
+              <% end %>
             </td> 
           </tr>
         <% end %>

@@ -7,8 +7,8 @@ class Order < ActiveRecord::Base
   validates :totle_sum, presence: true
   validates :saleman, presence: true
 
-  has_many :order_details
-  has_many :pandding_logs
+  has_many :order_details, dependent: :destroy
+  has_many :pandding_logs, dependent: :destroy
   belongs_to :customer
   belongs_to :creator, class_name: "User", foreign_key: "creator_id"
 
