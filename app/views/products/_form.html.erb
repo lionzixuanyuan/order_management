@@ -42,6 +42,14 @@
   </div>
 
   <div class="form-group">
+    <label for="product_price" class="col-sm-2 control-label">产品状态</label>
+    <div class="col-sm-8">
+      <%= f.select :aasm_state, Product::STATE_HASH.invert, {}, class: "form-control" %>
+    </div>
+    <div class="col-sm-2"></div>
+  </div>
+
+  <div class="form-group">
     <div class="col-sm-offset-2 col-sm-10">
       <button type="submit" class="btn btn-default">提交</button>
     </div>

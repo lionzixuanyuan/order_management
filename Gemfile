@@ -1,5 +1,9 @@
-source 'http://ruby.taobao.org'
-source 'https://rails-assets.org'
+source 'https://ruby.taobao.org'
+source 'https://rails-assets.org' do
+  gem 'rails-assets-bootstrap'
+  gem 'rails-assets-bootstrap-combobox'
+  gem 'rails-assets-fancybox'
+end
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '4.1.8'
@@ -30,13 +34,10 @@ gem 'spring',        group: :development
 # Use ActiveModel has_secure_password
 gem 'bcrypt', '~> 3.1.7'
 
-gem 'rails-assets-bootstrap'
-gem 'rails-assets-bootstrap-combobox'
 
 gem 'momentjs-rails', '>= 2.8.1'
 gem 'bootstrap3-datetimepicker-rails', '~> 4.0.0'
 
-gem 'rails-assets-fancybox'
 
 gem 'kaminari'
 

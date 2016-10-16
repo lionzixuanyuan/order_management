@@ -2,7 +2,7 @@ Rails.application.routes.draw do
 
   resources :panding_logs
 
-  resources :products, except: [:destroy]
+  resources :products#, except: [:destroy]
 
   resources :order_details
 

@@ -30,6 +30,11 @@
           <td>产品单价：</td>
           <td><%= @product.price %></td>
         </tr>
+
+        <tr>
+          <td>产品状态：</td>
+          <td><%= Product::STATE_HASH[@product.aasm_state.to_sym] %></td>
+        </tr>
       </table>
     </div>
 
